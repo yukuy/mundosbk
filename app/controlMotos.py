@@ -85,3 +85,18 @@ def delete_moto(id):
     db.session.commit()
     flash('moto eliminada correatamente')
     return redirect(url_for('motos'))
+
+#ruta para la  buequeda de cada marca
+@app.route('/buscar_motos')
+def buscar_motos():
+    query = request.args.get('query')
+    if query:
+        # Realizar la búsqueda en la base de datos
+        motos = Motos.query.join(Marca).filter(
+            (Motos.nombre.like(f'%{query}%')) | 
+            (Marca.nombre.like(f'%{query}%'))
+        ).all()
+    else:
+        motos = []
+
+    return render_template('resultados.html', motos=motos, user_nombre=session['user_nombre'])

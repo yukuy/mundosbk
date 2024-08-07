@@ -18,6 +18,12 @@
             <li><a href="/index">Inicio</a></li>
             <li><a href="/motos">Motos</a></li>
         </ul>
+        <!-- Barra de búsqueda -->
+        <form action="{{ url_for('buscar_motos') }}" method="get">
+            <label for="query">Buscar:</label>
+            <input type="text" name="query" id="query" placeholder="Ingrese marca o nombre">
+            <button type="submit">Buscar</button>
+        </form>
     </nav>
     </header>
 
