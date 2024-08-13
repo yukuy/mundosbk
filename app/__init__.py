@@ -10,3 +10,4 @@ db = SQLAlchemy(app)
 from app import controlMotos
 from app import controlUser
 
+
