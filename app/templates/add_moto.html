@@ -27,7 +27,7 @@
         <label for="marca_id">Marca:</label>
         <select id="marca_id" name="marca_id" required>
             {% for marca in marcas %}
-            <option value="{{ marca.id }}">{{ marca.serie }}</option>
+            <option value="{{ marca.id }}">{{ marca.nombre }}</option>
             {% endfor %}
         </select><br>
         
