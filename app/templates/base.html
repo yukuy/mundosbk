@@ -111,48 +111,74 @@
 
     <nav>
         <ul>
-            <li><a href="/base">Inicio</a></li>
-            <li><a href="#catalogo">Catálogo</a></li>
-            <li><a href="/motos">Agregar</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="{{ url_for('base') }}">Inicio</a></li>
+            <li><a href="{{ url_for('catalogo') }}">Catálogo</a></li>
+            <li><a href="{{ url_for('motos') }}">Agregar</a></li>
+            <li><a href="{{ url_for('historial') }}">Historial de Búsqueda</a></li>
             <li><a href="{{ url_for('logout') }}">Cerrar Sesión</a></li>
         </ul>
-    </nav>
-
-    <div class="container">
-        <form action="{{ url_for('buscar_motos') }}" method="get">
-            <label for="query">Buscar:</label>
-            <input type="text" name="query" id="query" placeholder="Ingrese marca o nombre">
+        <!-- Formulario de búsqueda en el menú -->
+        <form action="{{ url_for('buscar_motos') }}" method="get" style="display: inline;">
+            <label for="query" class="visually-hidden">Buscar:</label>
+            <input type="text" name="query" id="query" placeholder="Buscar..." onfocus="mostrarHistorial()">
             <button type="submit">Buscar</button>
         </form>
-        <h2>Bienvenido a MUNDOSBK, {{ user_nombre }}</h2>
-        <div class="motorcycle-grid">
-            <div class="motorcycle-card">
-                <img src="../static/uploads/honda.jpg" alt="Moto deportiva negra, estilo melo" class="motorcycle-image" width="640" height="480">
-                <div class="motorcycle-info">
-                    <h3>SuperSport 950</h3>
-                    <p>Potencia y agilidad en un diseño impresionante.</p>
-                    <a href="https://moto-enthusiast.example.com/supersport-950" class="cta-button">Más información</a>
+    </nav>
+    
+        {% block content %}
+        <div class="container">
+            <script>
+                function mostrarHistorial() {
+                    const historial = {{ historial_busqueda | tojson }};
+                    const queryInput = document.getElementById('query');
+                    if (historial.length > 0) {
+                        const datalist = document.createElement('datalist');
+                        datalist.id = 'historial';
+                        historial.forEach(query => {
+                            const option = document.createElement('option');
+                            option.value = query;
+                            datalist.appendChild(option);
+                        });
+                        queryInput.setAttribute('list', 'historial');
+                        document.body.appendChild(datalist);
+                    }
+                }
+                </script>
+                
+            <h2>Bienvenido a MUNDOSBK, {{ user_nombre }}</h2>
+    
+    
+    <!--contenido de afuera -->
+            <div class="motorcycle-grid">
+                <div class="motorcycle-card">
+                   <!-- <img src="../static/uploads/cbr.jpg" alt="Moto deportiva negra, estilo melo" class="motorcycle-image" width="640" height="480">-->
+                    <div class="motorcycle-info">
+                        <h3>SuperSport 950</h3>
+                        <p>Potencia y agilidad en un diseño impresionante.</p>
+                        <a href="https://moto-enthusiast.example.com/supersport-950" class="cta-button">Más información</a>
+                    </div>
                 </div>
-            </div>
-            <div class="motorcycle-card">
-                <img src="{{ url_for('static', filename='uploads/honda.jpg') }}" alt="Moto custom negra, estilo clásico" class="motorcycle-image" width="640" height="480">
-                <div class="motorcycle-info">
-                    <h3>Cruiser Deluxe</h3>
-                    <p>Confort y estilo para largos viajes por carretera.</p>
-                    <a href="https://moto-enthusiast.example.com/cruiser-deluxe" class="cta-button">Más información</a>
+                <div class="motorcycle-card">
+                    <!--<img src="{{ url_for('static', filename='../static/uploads/cbr.jpg') }}" alt="Moto custom negra, estilo clásico" class="motorcycle-image" width="640" height="480">-->
+                    <div class="motorcycle-info">
+                        <h3>Cruiser Deluxe</h3>
+                        <p>Confort y estilo para largos viajes por carretera.</p>
+                        <a href="https://moto-enthusiast.example.com/cruiser-deluxe" class="cta-button">Más información</a>
+                    </div>
                 </div>
-            </div>
-            <div class="motorcycle-card">
-                <img src="https://placeimg.com/640/480/tech/3" alt="Moto de aventura verde, preparada para todo terreno" class="motorcycle-image" width="640" height="480">
-                <div class="motorcycle-info">
-                    <h3>Adventure Explorer</h3>
-                    <p>Domina cualquier terreno con esta bestia todoterreno.</p>
-                    <a href="https://moto-enthusiast.example.com/adventure-explorer" class="cta-button">Más información</a>
+                <div class="motorcycle-card">
+                    <!--<img src="https://placeimg.com/640/480/tech/3" alt="Moto de aventura verde, preparada para todo terreno" class="motorcycle-image" width="640" height="480">-->
+                    <div class="motorcycle-info">
+                        <h3>Adventure Explorer</h3>
+                        <p>Domina cualquier terreno con esta bestia todoterreno.</p>
+                        <a href="https://moto-enthusiast.example.com/adventure-explorer" class="cta-button">Más información</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    
+        {% endblock %}
+    </main>
 </body>
 </html>
 

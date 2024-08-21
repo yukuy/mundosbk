@@ -6,7 +6,7 @@ import os
 @app.route('/motos')
 def motos():
     motos = Motos.query.all()
-    return render_template('motos.html', motos=motos)
+    return render_template('listar_motos.html', motos=motos)
 
 #agregar motos
 @app.route('/add_moto', methods=['GET', 'POST'])
@@ -33,7 +33,7 @@ def add_moto():
         return redirect(url_for('motos'))
 
     marcas = Marca.query.all()
-    return render_template('add_moto.html', marcas=marcas)
+    return render_template('registrar_moto.html', marcas=marcas)
 
 #editar los caompos 
 @app.route('/edit_motos/edit/<int:id>', methods=['GET', 'POST'])
@@ -72,7 +72,7 @@ def edit_moto(id):
 
     marcas = Marca.query.all()
     
-    return render_template('edit_moto.html', motos=motos, marcas=marcas)
+    return render_template('editar_moto.html', motos=motos, marcas=marcas)
 
 #eliminar un registro
 @app.route('/delete_moto/delete/<int:id>', methods=['GET', 'POST'])
@@ -89,7 +89,7 @@ def delete_moto(id):
 
 
 
-#ruta para la  buequeda de cada marca
+#ruta para la  buequeda de cada marca y nombre
 @app.route('/buscar_motos')
 def buscar_motos():
     query = request.args.get('query')
@@ -99,7 +99,38 @@ def buscar_motos():
             (Motos.nombre.like(f'%{query}%')) | 
             (Marca.nombre.like(f'%{query}%'))
         ).all()
+
+        # Obtener el historial de búsqueda desde la sesión
+        historial_busqueda = session.get('historial_busqueda', [])
+        print("Historial actual:", historial_busqueda)  # Imprimir para depuración
+
+        # Agregar la nueva búsqueda al historial si no está ya presente
+        if query not in historial_busqueda:
+            historial_busqueda.append(query)
+            # Limitar el tamaño del historial a 10 entradas
+            if len(historial_busqueda) > 10:
+                historial_busqueda.pop(0)
+            session['historial_busqueda'] = historial_busqueda
+
+        print("Historial actualizado:", historial_busqueda)  # Imprimir para depuración
+
     else:
         motos = []
-        
+
     return render_template('resultados.html', motos=motos, user_nombre=session['user_nombre'])
+
+
+#para ver el historial 
+@app.route('/historial')
+def historial():
+    # Obtener el historial de búsqueda de la sesión
+    historial_busqueda = session.get('historial_busqueda', [])
+    return render_template('historial.html', historial_busqueda=historial_busqueda)
+
+
+
+#rutas para el catalogo
+@app.route('/catalogo')
+def catalogo():
+    moto = Motos.query.all()
+    return render_template('catalogo.html', moto=moto)

@@ -59,10 +59,12 @@ def base():
     if 'user_id' not in session:
         flash('Por favor, inicia sesión primero.', 'warning')
         return redirect(url_for('login'))
-    return render_template('base.html', user_nombre=session['user_nombre'])
+
+    # Obtener el historial de búsqueda desde la sesión o inicializarlo como una lista vacía
+    historial_busqueda = session.get('historial_busqueda', [])
+
+    # Pasar el historial de búsqueda y el nombre de usuario al renderizar la plantilla
+    return render_template('base.html', user_nombre=session['user_nombre'], historial_busqueda=historial_busqueda)
 
 
 
-@app.route('/index')
-def index():
-    return render_template('index.html')
