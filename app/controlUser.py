@@ -61,6 +61,8 @@ def base():
         return redirect(url_for('login'))
     return render_template('base.html', user_nombre=session['user_nombre'])
 
+
+
 @app.route('/index')
 def index():
     return render_template('index.html')

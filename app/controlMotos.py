@@ -7,6 +7,7 @@ import os
 def motos():
     motos = Motos.query.all()
     return render_template('motos.html', motos=motos)
+
 #agregar motos
 @app.route('/add_moto', methods=['GET', 'POST'])
 def add_moto():
@@ -86,6 +87,8 @@ def delete_moto(id):
     flash('moto eliminada correatamente')
     return redirect(url_for('motos'))
 
+
+
 #ruta para la  buequeda de cada marca
 @app.route('/buscar_motos')
 def buscar_motos():
@@ -98,5 +101,5 @@ def buscar_motos():
         ).all()
     else:
         motos = []
-
+        
     return render_template('resultados.html', motos=motos, user_nombre=session['user_nombre'])
