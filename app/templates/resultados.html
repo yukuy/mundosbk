@@ -3,32 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>motos de buqueda</title>
+    <title>Motos de Búsqueda</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .moto-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            border-radius: 8px;
+            margin-bottom: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .card p {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
-    <!-- templates/resultados.html -->
-{% extends "base.html" %}
+    {% extends "base.html" %}
 
-{% block content %}
-<h2>Resultados de la Búsqueda</h2>
-<ul>
-    {% for moto in motos %}
-        <li>
+    {% block content %}
+    <h2>Resultados de la Búsqueda</h2>
+
+    <div class="moto-container">
+        {% for moto in motos %}
+        <div class="card">
             <p>Nombre: {{ moto.nombre }}</p>
             <p>Cantidad: {{ moto.cantidad }}</p>
             <p>Precio: {{ moto.precio }}</p>
-            <td>
-                {% if moto.foto %}
-                    <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
-                    alt="Foto de {{ moto.nombre }}" width="100">
-                {% else %}
-                    No disponible
-                {% endif %}
-            </td>
-        </li>
-    {% endfor %}
-</ul>
-{% endblock %}
-
+            {% if moto.foto %}
+                <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
+                     alt="Foto de {{ moto.nombre }}">
+            {% else %}
+                <p>No disponible</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
 </body>
 </html>

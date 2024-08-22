@@ -1,20 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    {% extends 'base.html' %} {% block content %}
-    <h1>Historial de Búsqueda</h1>
-    <ul>
-      {% if historial_busqueda %} {% for busqueda in historial_busqueda %}
-      <li>{{ busqueda }}</li>
-      {% endfor %} {% else %}
-      <li>No hay historial de búsqueda.</li>
-      {% endif %}
-    </ul>
+    <title>Historial de Búsqueda</title>
+    <style>
+      .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #5d5c61;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #e1e1e1;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        li:hover {
+            background-color: #d4d4d4;
+        }
+
+        li:last-child {
+            margin-bottom: 0;
+        }
+
+        .no-history {
+            text-align: center;
+            color: #888;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            li {
+                font-size: 1rem;
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <div class="container">
+        <h1>Historial de Búsqueda</h1>
+        <ul>
+            {% if historial_busqueda %}
+                {% for busqueda in historial_busqueda %}
+                    <li>{{ busqueda }}</li>
+                {% endfor %}
+            {% else %}
+                <li class="no-history">No hay historial de búsqueda.</li>
+            {% endif %}
+        </ul>
+    </div>
     {% endblock %}
-  </body>
+</body>
 </html>

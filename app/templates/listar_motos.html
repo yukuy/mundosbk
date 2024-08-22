@@ -3,40 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>motos</title>
+    <title>Motos</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .moto-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            border-radius: 8px;
+            margin-bottom: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .card h3 {
+            margin: 10px 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .card p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .card a:hover {
+            background-color: #555;
+        }
+
+        .card button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .card button:hover {
+            background-color: #c0392b;
+        }
+
+        .add-moto {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-moto:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
     {% extends "base.html" %}
     {% block content %}
-    <div> 
-        <h1>MOTOS DISPONIBLES</h1>
-        <a href="{{url_for('add_moto') }}">Agregar Nueva Moto </a>
-
-        <ul>
-            {% for moto in motos  %}
-            <li>
-                <h3>{{moto.nombre}} </h3>
-                <p>Precio:{{moto.precio}}</p>
-                <p>Diponibles:{{moto.cantidad}}
-                <br>
-                <td>
-                    {% if moto.foto %}
-                        <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
-                        alt="Foto de {{ moto.nombre }}" width="100">
-                    {% else %}
-                        No disponible
-                    {% endif %}
-                </td>
-                <br>
-                <a href="{{url_for('edit_moto', id=moto.id)}}">Editar </a>
-                <br>
-                <form action="{{ url_for('delete_moto', id=moto.id) }}" method="post">
-                    <button type="submit">Eliminar</button>
-                </form>
-            </li>
-            {% endfor %}
-        </ul>
+    <h1>MIS MOTOS</h1>
+    <a class="add-moto" href="{{url_for('add_moto') }}">Agregar Nueva Moto</a>
+    <br>
+    <br>
+    <div class="moto-container">
+        {% for moto in motos %}
+        <div class="card">
+            <h3>{{ moto.nombre }}</h3>
+            <p>Precio: {{ moto.precio }}</p>
+            <p>Disponibles: {{ moto.cantidad }}</p>
+            {% if moto.foto %}
+                <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
+                     alt="Foto de {{ moto.nombre }}">
+            {% else %}
+                <p>No disponible</p>
+            {% endif %}
+            <a href="{{ url_for('edit_moto', id=moto.id) }}">Editar</a>
+            <form action="{{ url_for('delete_moto', id=moto.id) }}" method="post">
+                <button type="submit">Eliminar</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
     {% endblock content %}
-
 </body>
 </html>

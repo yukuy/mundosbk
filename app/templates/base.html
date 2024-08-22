@@ -149,34 +149,38 @@
     
     
     <!--contenido de afuera -->
-            <div class="motorcycle-grid">
-                <div class="motorcycle-card">
-                   <!-- <img src="../static/uploads/cbr.jpg" alt="Moto deportiva negra, estilo melo" class="motorcycle-image" width="640" height="480">-->
-                    <div class="motorcycle-info">
-                        <h3>SuperSport 950</h3>
-                        <p>Potencia y agilidad en un diseño impresionante.</p>
-                        <a href="https://moto-enthusiast.example.com/supersport-950" class="cta-button">Más información</a>
-                    </div>
+    <div class="container">
+        <h2>Bienvenido a MUNDOSBK, {{ user_nombre }}</h2>
+        <div class="motorcycle-grid">
+            <div class="motorcycle-card">
+                <img src="{{ url_for('static', filename='uploads/mt 09.jpg') }}" alt="Moto deportiva negra, estilo melo" class="motorcycle-image" width="640" height="480">
+                <div class="motorcycle-info">
+                    <h3>Mt-09</h3>
+                    <p>La Yamaha MT-09 es una moto naked ágil y potente, con un motor tricilíndrico de 889 cc y un diseño agresivo. 
+                        Destaca por su rendimiento en carretera y tecnologías avanzadas para una conducción segura y personalizable.</p>
+                    <a href="https://moto-enthusiast.example.com/supersport-950" class="cta-button">Más información</a>
                 </div>
-                <div class="motorcycle-card">
-                    <!--<img src="{{ url_for('static', filename='../static/uploads/cbr.jpg') }}" alt="Moto custom negra, estilo clásico" class="motorcycle-image" width="640" height="480">-->
-                    <div class="motorcycle-info">
-                        <h3>Cruiser Deluxe</h3>
-                        <p>Confort y estilo para largos viajes por carretera.</p>
-                        <a href="https://moto-enthusiast.example.com/cruiser-deluxe" class="cta-button">Más información</a>
-                    </div>
+            </div>
+            <div class="motorcycle-card">
+                <img src="{{ url_for('static', filename='uploads/cbr.jpg') }}" alt="Moto custom negra, estilo clásico" class="motorcycle-image" width="640" height="480">
+                <div class="motorcycle-info">
+                    <h3>CBR1000rr</h3>
+                    <p>La Honda CBR1000RR es una moto deportiva de alta gama, conocida por su potente motor de 999 cc, precisión en el manejo y avanzada tecnología. 
+                        Diseñada para ofrecer un rendimiento sobresaliente en pista y carretera.</p>
+                    <a href="https://moto-enthusiast.example.com/cruiser-deluxe" class="cta-button">Más información</a>
                 </div>
-                <div class="motorcycle-card">
-                    <!--<img src="https://placeimg.com/640/480/tech/3" alt="Moto de aventura verde, preparada para todo terreno" class="motorcycle-image" width="640" height="480">-->
-                    <div class="motorcycle-info">
-                        <h3>Adventure Explorer</h3>
-                        <p>Domina cualquier terreno con esta bestia todoterreno.</p>
-                        <a href="https://moto-enthusiast.example.com/adventure-explorer" class="cta-button">Más información</a>
-                    </div>
+            </div>
+            <div class="motorcycle-card">
+                <img src="{{ url_for('static', filename='uploads/Aprilia RSV4.jpg') }}"alt="Moto de aventura verde, preparada para todo terreno" class="motorcycle-image" width="640" height="480">
+                <div class="motorcycle-info">
+                    <h3>Aprilia rsv4</h3>
+                    <p>La Aprilia RSV4 es una moto deportiva de 1,099 cc con motor V4, conocida por su potencia y rendimiento sobresaliente. 
+                        Ofrece un manejo preciso y tecnología avanzada para un rendimiento óptimo en pista y carretera.</p>
+                    <a href="https://moto-enthusiast.example.com/adventure-explorer" class="cta-button">Más información</a>
                 </div>
             </div>
         </div>
-    
+    </div>    
         {% endblock %}
     </main>
 </body>
