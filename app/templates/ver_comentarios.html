@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motos Disponibles</title>
+    <title>Comentarios de Moto</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -20,52 +20,41 @@
             color: #444;
         }
 
-        .moto-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .card {
+        .moto-details {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            width: 300px;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
             text-align: center;
-            transition: transform 0.2s;
         }
 
-        .card:hover {
-            transform: scale(1.05);
-        }
-
-        .card img {
+        .moto-details img {
             border-radius: 8px;
-            margin-bottom: 10px;
-            max-width: 100%;
+            margin-bottom: 15px;
+            max-width: 300px;
             height: auto;
         }
 
-        .card h3 {
-            margin: 10px 0;
-            font-size: 1.5rem;
-            color: #333;
-        }
-
-        .card p {
+        .moto-details p {
             margin: 5px 0;
             color: #666;
         }
 
         .comentarios {
-            margin-top: 15px;
+            margin-top: 20px;
             text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
         }
 
         .comentarios h4 {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             color: #444;
         }
 
@@ -76,16 +65,18 @@
         }
 
         form {
-            margin-top: 10px;
+            margin-top: 20px;
+            text-align: left;
         }
 
         textarea {
             width: 100%;
-            height: 60px;
+            height: 80px;
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 4px;
             border: 1px solid #ccc;
+            box-sizing: border-box;
         }
 
         button {
@@ -95,6 +86,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 1rem;
         }
 
         button:hover {
@@ -105,24 +97,27 @@
 <body>
     {% extends "base.html" %}
     {% block content %}
-    <h1>MOTOS DISPONIBLES</h1>
+    <h1>Comentarios para {{ moto.nombre }}</h1>
 
-    <div class="moto-container">
-        {% for moto in moto %}
-        <div class="card">
+    <div class="moto-details">
+        <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
+             alt="Foto de {{ moto.nombre }}">
+        <p>Precio: {{ moto.precio }}</p>
+        <p>Disponibles: {{ moto.cantidad }}</p>
 
-            <h3>{{ moto.nombre }}</h3>
-            <p>Precio: {{ moto.precio }}</p>
-            <p>Disponibles: {{ moto.cantidad }}</p>
-            {% if moto.foto %}
-                <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
-                     alt="Foto de {{ moto.nombre }}">
-            {% else %}
-                <p>No disponible</p>
-            {% endif %}
-            <a href="{{ url_for('ver_comentarios', moto_id=moto.id) }}">Ver Comentarios</a>
+        <!-- Mostrar comentarios existentes -->
+        <div class="comentarios">
+            <h4>Comentarios:</h4>
+            {% for comentario in comentarios %}
+                <p>{{ comentario.usuarios.nombre }}: {{ comentario.comentario }}</p>
+            {% endfor %}
         </div>
-        {% endfor %}
+
+        <!-- Formulario para agregar un comentario -->
+        <form action="{{ url_for('add_comentario', moto_id=moto.id) }}" method="POST">
+            <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
     </div>
     {% endblock content %}
 </body>
