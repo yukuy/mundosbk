@@ -12,3 +12,4 @@ db = SQLAlchemy(app)
 
 from app import controlMotos
 from app import controlUser
+from app import comentarios
