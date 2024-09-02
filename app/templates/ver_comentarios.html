@@ -97,29 +97,38 @@
 <body>
     {% extends "base.html" %}
     {% block content %}
-    <h1>Comentarios para {{ moto.nombre }}</h1>
+    <div class"infomoto">
+        <!--info de la moto selecionada-->
+        <div class="moto-details">
+            
+        <h1>Informacion de {{ moto.nombre }}</h1>
 
-    <div class="moto-details">
-        <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
-             alt="Foto de {{ moto.nombre }}">
-        <p>Precio: {{ moto.precio }}</p>
-        <p>Disponibles: {{ moto.cantidad }}</p>
-        <label for="descripcion">Descripcion:</label>
-        <textarea id="descripcion" name="descripcion" required>{{ moto.descripcion }}</textarea><br>
+            <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
+                alt="Foto de {{ moto.nombre }}">
+            <p>Precio: {{ moto.precio }}</p>
+            <p>Disponibles: {{ moto.cantidad }}</p>
+            <label for="descripcion">Descripcion:</label>
+            <textarea id="descripcion" name="descripcion" required>{{ moto.descripcion }}</textarea><br>
 
-        <!-- Mostrar comentarios existentes -->
-        <div class="comentarios">
-            <h4>Comentarios:</h4>
-            {% for comentario in comentarios %}
-                <p>{{ comentario.usuarios.nombre }}: {{ comentario.comentario }}</p>
-            {% endfor %}
+            <!-- Mostrar comentarios existentes -->
+            <div class="comentarios">
+                <h4>Comentarios:</h4>
+                {% for comentario in comentarios %}
+                    <p>{{ comentario.usuarios.nombre }}: {{ comentario.comentario }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Formulario para agregar un comentario -->
+            <form action="{{ url_for('add_comentario', moto_id=moto.id) }}" method="POST">
+                <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
         </div>
 
-        <!-- Formulario para agregar un comentario -->
-        <form action="{{ url_for('add_comentario', moto_id=moto.id) }}" method="POST">
-            <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
-            <button type="submit">Enviar</button>
-        </form>
+        <!--info del vendedor-->
+        <div class"infovendedor">
+
+        </div>
     </div>
     {% endblock content %}
 </body>
