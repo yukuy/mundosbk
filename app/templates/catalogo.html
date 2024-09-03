@@ -69,15 +69,17 @@
     <div class="moto-container">
         {% for moto in moto %}
         <div class="card">
+
             <h3>{{ moto.nombre }}</h3>
             <p>Precio: {{ moto.precio }}</p>
             <p>Disponibles: {{ moto.cantidad }}</p>
             {% if moto.foto %}
                 <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
-                    alt="Foto de {{ moto.nombre }}">
+                     alt="Foto de {{ moto.nombre }}">
             {% else %}
                 <p>No disponible</p>
             {% endif %}
+            <a href="{{ url_for('ver_comentarios', moto_id=moto.id) }}">Mas Informacion</a>
         </div>
         {% endfor %}
     </div>

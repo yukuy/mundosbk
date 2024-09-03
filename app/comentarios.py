@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, request, flash, session
 from app import app
-from app.models import Motos, Comentarios, db
+from app.models import Motos, Comentarios, Usuarios, db
 
 # Ruta para los comentarios
 @app.route('/add_comentario/<int:moto_id>', methods=['POST'])
@@ -32,9 +32,12 @@ def ver_comentarios(moto_id):
     # Verificar si el usuario está autenticado
     if 'user_id' not in session:
         flash('Debes iniciar sesión para ver y agregar comentarios.', 'warning')
-        return redirect(url_for('login'))
-
+        return redirect(url_for('login')) 
+    # Obtener la moto
     moto = Motos.query.get_or_404(moto_id)
+    # Obtener los comentarios asociados a la moto
     comentarios = Comentarios.query.filter_by(idMotos=moto_id).all()
-
-    return render_template('ver_comentarios.html', moto=moto, comentarios=comentarios)
+    # Obtener el usuario que registró la moto usando la relación definida en el modelo
+    vendedor = Usuarios.query.get_or_404(moto.usuarios_id)
+    
+    return render_template('ver_comentarios.html', moto=moto, comentarios=comentarios, vendedor=vendedor)

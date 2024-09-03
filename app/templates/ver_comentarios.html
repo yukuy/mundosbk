@@ -14,6 +14,11 @@
             padding: 20px;
         }
 
+        .informaciongeneral {
+            display: flex;
+            border-radius: 8px;
+        }
+
         h1 {
             text-align: center;
             margin-bottom: 20px;
@@ -40,6 +45,16 @@
         .moto-details p {
             margin: 5px 0;
             color: #666;
+        }
+        
+        .infovendedor {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
         }
 
         .comentarios {
@@ -97,29 +112,46 @@
 <body>
     {% extends "base.html" %}
     {% block content %}
-    <h1>Comentarios para {{ moto.nombre }}</h1>
+    
+    <div class="informaciongeneral">
+        <!-- Información de la moto -->
+        <div class="moto-details">
+            <h1>Información de {{ moto.nombre }}</h1>
+            <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" alt="Foto de {{ moto.nombre }}">
+            <p>Precio: {{ moto.precio }}</p>
+            <p>Disponibles: {{ moto.cantidad }}</p>
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" required>{{ moto.descripcion }}</textarea><br>
 
-    <div class="moto-details">
-        <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
-             alt="Foto de {{ moto.nombre }}">
-        <p>Precio: {{ moto.precio }}</p>
-        <p>Disponibles: {{ moto.cantidad }}</p>
-        <label for="descripcion">Descripcion:</label>
-        <textarea id="descripcion" name="descripcion" required>{{ moto.descripcion }}</textarea><br>
+            <!-- Mostrar comentarios existentes -->
+            <div class="comentarios">
+                <h4>Comentarios:</h4>
+                {% for comentario in comentarios %}
+                    <p>{{ comentario.usuarios.nombre }}: {{ comentario.comentario }}</p>
+                {% endfor %}
+            </div>
 
-        <!-- Mostrar comentarios existentes -->
-        <div class="comentarios">
-            <h4>Comentarios:</h4>
-            {% for comentario in comentarios %}
-                <p>{{ comentario.usuarios.nombre }}: {{ comentario.comentario }}</p>
-            {% endfor %}
+            <!-- Formulario para agregar un comentario -->
+            <form action="{{ url_for('add_comentario', moto_id=moto.id) }}" method="POST">
+                <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
         </div>
 
-        <!-- Formulario para agregar un comentario -->
-        <form action="{{ url_for('add_comentario', moto_id=moto.id) }}" method="POST">
-            <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
-            <button type="submit">Enviar</button>
-        </form>
+        <!-- Información del vendedor -->
+        <div class="infovendedor">
+            <h1>Vendedor</h1>
+            <p>Nombre: {{ vendedor.nombre }}</p>
+            <p>Correo: {{ vendedor.correo }}</p>  
+            <p>Teléfono: {{ vendedor.telefono }}</p>
+
+           <!-- Botón de WhatsApp con código de país de Colombia (+57) -->
+           <a href="https://wa.me/57{{ vendedor.telefono }}?text=Hola,%20estoy%20interesado%20en%20la%20moto%20{{ moto.nombre }}" target="_blank">
+                <button style="background-color: #25D366; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px;">
+                    Chatea con el vendedor en WhatsApp
+                </button>
+            </a>
+        </div>
     </div>
     {% endblock content %}
 </body>

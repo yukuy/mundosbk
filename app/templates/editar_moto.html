@@ -120,18 +120,18 @@
                 {% if motos.foto %}
                 <img src="{{ url_for('static', filename='uploads/' ~ motos.foto) }}" alt="Foto de {{ motos.nombre }}" width="100"><br>
                 {% endif %}
+
+                <label for="descripcion">Descripcion:</label>
+                <textarea id="descripcion" name="descripcion" required>{{ motos.descripcion }}</textarea><br>
                 
                 <label for="marca_id">Marca:</label>
                 <select id="marca_id" name="marca_id" required>
                     {% for marca in marcas %}
-                    <option value="{{ marca.id }}" {% if marca.id == motos.marca_id %}selected{% endif %}>{{ marca.serie }}</option>
+                    <option value="{{ marca.id }}" {% if marca.id == motos.marca_id %}selected{% endif %}>{{ marca.nombre }}</option>
                     {% endfor %}
                 </select><br>
                 
-                
-                    <button type="submit">Actualizar Moto</button>
-                
-
+                <button type="submit">Actualizar Moto</button>
             </form>
         </div>
     </div>
