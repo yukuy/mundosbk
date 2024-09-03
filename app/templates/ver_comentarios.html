@@ -104,6 +104,8 @@
              alt="Foto de {{ moto.nombre }}">
         <p>Precio: {{ moto.precio }}</p>
         <p>Disponibles: {{ moto.cantidad }}</p>
+        <label for="descripcion">Descripcion:</label>
+        <textarea id="descripcion" name="descripcion" required>{{ moto.descripcion }}</textarea><br>
 
         <!-- Mostrar comentarios existentes -->
         <div class="comentarios">

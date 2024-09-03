@@ -4,14 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agregar Moto</title>
-</head>
-<body>
-    {% extends "base.html" %}
-
-    {% block content %}
-    
     <style>
-
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+        }
 
         .background-container {
             padding: 1.5rem;
@@ -30,6 +32,7 @@
 
         .container {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             background-color: rgba(255, 255, 255, 0.95);
@@ -44,6 +47,9 @@
         h2 {
             color: #333;
             margin-bottom: 1.5rem;
+            width: 100%;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
         }
 
         label {
@@ -51,15 +57,21 @@
             margin-bottom: 0.5rem;
             color: #555;
             text-align: left;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+
         }
 
         input[type="text"],
         input[type="number"],
         input[type="file"],
-        select {
+        select,
+        textarea {
             width: 100%;
+            max-width: 300px;
             padding: 0.8rem;
-            margin-bottom: 1rem;
+            margin: 0 auto 1rem;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 1rem;
@@ -67,6 +79,7 @@
 
         button[type="submit"] {
             width: 100%;
+            max-width: 300px;
             padding: 0.8rem;
             background-color: #333;
             color: #fff;
@@ -74,6 +87,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 1rem;
+            margin: 1rem auto 0;
             transition: background-color 0.3s ease;
         }
 
@@ -81,7 +95,10 @@
             background-color: #555;
         }
     </style>
+</head>
+<body>
 
+    {% block content %}
     <div class="background-container">
         <div class="container">
             <h2>Agregar Moto</h2>
@@ -97,6 +114,9 @@
                 
                 <label for="foto">Foto:</label>
                 <input type="file" id="foto" name="foto"><br>
+
+                <label for="descripcion">Descripcion:</label>
+                <textarea name="descripcion" placeholder="Descripción de la moto:"></textarea>
                 
                 <label for="marca_id">Marca:</label>
                 <select id="marca_id" name="marca_id" required>
