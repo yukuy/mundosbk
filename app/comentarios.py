@@ -13,7 +13,7 @@ def add_comentario(moto_id):
     comentario = request.form.get('comentario')
     if not comentario:
         flash('El comentario no puede estar vacío.', 'error')
-        return redirect(url_for('catalogo'))
+        return redirect(url_for('ver_comentarios', moto_id=moto_id))
 
     # Obtener el ID del usuario desde la sesión
     user_id = session['user_id']
@@ -24,7 +24,7 @@ def add_comentario(moto_id):
     db.session.commit()
 
     flash('Comentario agregado exitosamente!', 'success')
-    return redirect(url_for('catalogo'))
+    return redirect(url_for('ver_comentarios', moto_id=moto_id))
 
 #ruta para ver y poder agregar nuevos comentarios
 @app.route('/ver_comentarios/<int:moto_id>', methods=['GET'])
