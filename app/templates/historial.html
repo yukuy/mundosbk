@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Historial de Búsqueda</title>
     <style>
-
-    
         .container {
             max-width: 800px;
             margin: 2rem auto;
@@ -19,12 +17,23 @@
             text-align: center;
             color: #666;
         }
-        li:last-child {
-            border-bottom: none;}
-
-
-        
-
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            padding: 0.5rem;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+        a:hover {
+    
+            color: #000;
+        }
+ 
     </style>
 </head>
 <body>
@@ -35,7 +44,7 @@
         <ul>
             {% if historial_busqueda %}
                 {% for busqueda in historial_busqueda %}
-                    <li>{{ busqueda }}</li>
+                    <li><a href="{{ url_for('buscar_motos') }}?query={{ busqueda }}">{{ busqueda }}</a></li>
                 {% endfor %}
             {% else %}
                 <li class="no-history">No hay historial de búsqueda.</li>
