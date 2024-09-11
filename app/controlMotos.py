@@ -114,43 +114,7 @@ def delete_moto(id):
     return redirect(url_for('motos'))
 
 
-#ruta para la  buequeda de cada marca y nombre
-@app.route('/buscar_motos')
-def buscar_motos():
-    query = request.args.get('query')
-    if query:
-        # Realizar la búsqueda en la base de datos
-        motos = Motos.query.join(Marca).filter(
-            (Motos.nombre.like(f'%{query}%')) | 
-            (Marca.nombre.like(f'%{query}%'))
-        ).all()
 
-        # Obtener el historial de búsqueda desde la sesión
-        historial_busqueda = session.get('historial_busqueda', [])
-        print("Historial actual:", historial_busqueda)  # Imprimir para depuración
-
-        # Agregar la nueva búsqueda al historial si no está ya presente
-        if query not in historial_busqueda:
-            historial_busqueda.append(query)
-            # Limitar el tamaño del historial a 10 entradas
-            if len(historial_busqueda) > 10:
-                historial_busqueda.pop(0)
-            session['historial_busqueda'] = historial_busqueda
-
-        print("Historial actualizado:", historial_busqueda)  # Imprimir para depuración
-
-    else:
-        motos = []
-
-    return render_template('resultados.html', motos=motos, user_nombre=session['user_nombre'])
-
-
-#para ver el historial 
-@app.route('/historial')
-def historial():
-    # Obtener el historial de búsqueda de la sesión
-    historial_busqueda = session.get('historial_busqueda', [])
-    return render_template('historial.html', historial_busqueda=historial_busqueda)
 
 
 
