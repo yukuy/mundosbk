@@ -3,7 +3,6 @@ from app import app
 from app.models import Usuarios, db
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -12,8 +11,8 @@ def register():
         clave = request.form['clave']
         telefono = request.form['telefono']
         
-        # Hash de la contraseña
-        clave_hash = generate_password_hash(clave)
+        # Hash de la contraseña utilizando un método específico
+        clave_hash = generate_password_hash(clave, method='pbkdf2:sha256', salt_length=8)
         
         try:
             nuevo_usuarios = Usuarios(nombre=nombre, correo=correo, clave=clave_hash, telefono=telefono)
@@ -65,6 +64,3 @@ def base():
 
     # Pasar el historial de búsqueda y el nombre de usuario al renderizar la plantilla
     return render_template('base.html', user_nombre=session['user_nombre'], historial_busqueda=historial_busqueda)
-
-
-

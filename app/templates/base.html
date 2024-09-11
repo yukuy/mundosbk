@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cabeza de paginas</title>
     <style>
+        /* Estilos generales */
         body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
         }
+
         header {
-            background-color: black  ;
+            background-color: black;
             color: white;
             text-align: center;
             padding: 1rem 0;
@@ -27,6 +32,8 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            box-sizing: border-box; /* Incluye el padding en el ancho total */
         }
 
         nav ul {
@@ -37,26 +44,22 @@
             gap: 1rem;
         }
 
-        nav ul li {
-            margin: 0;
-        }
-
         nav ul li a {
             text-decoration: none;
             color: #fff;
             padding: 0.5rem 1rem;
             border-radius: 5px;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
         nav ul li a:hover {
             background-color: #1f618d;
-            color: #fff;
         }
 
         nav form {
             display: flex;
             align-items: center;
+            margin-left: auto;
         }
 
         nav input[type="text"] {
@@ -66,7 +69,6 @@
             margin-right: 0.5rem;
             background-color: #333;
             color: #fff;
-            transition: background-color 0.3s ease;
         }
 
         nav input[type="text"]:focus {
@@ -80,8 +82,6 @@
             border: none;
             border-radius: 5px;
             color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
         nav button:hover {
@@ -92,6 +92,9 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
+            flex: 1;
+            overflow: hidden; /* Evita desbordamiento */
+            box-sizing: border-box; /* Incluye el padding en el ancho total */
         }
 
         .motorcycle-grid {
@@ -99,6 +102,10 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
+            max-height: 80vh; /* Limita la altura de la sección de contenido */
+            overflow-y: auto; /* Añade un scroll vertical si el contenido es demasiado alto */
+            width: 100%; /* Asegura que el contenedor no se desborde */
+            box-sizing: border-box; /* Incluye el padding en el ancho total */
         }
 
         .motorcycle-card {
@@ -131,7 +138,7 @@
 
         .cta-button {
             display: inline-block;
-            background-color: #1a5276 ;
+            background-color: #1a5276;
             color: #fff;
             padding: 0.5rem 1rem;
             text-decoration: none;
@@ -142,16 +149,17 @@
         .cta-button:hover {
             background-color: #03129c;
         }
+
         footer {
             background: #1a1a1a;
             padding: 1rem;
             text-align: center;
             color: #888;
             font-size: 0.875rem;
-            margin-top: 2rem;
+            width: 100%;
+            box-sizing: border-box; /* Incluye el padding en el ancho total */
+            margin-top: 2rem; /* Espacio entre el contenido y el pie de página */
         }
-
-
     </style>
 </head>
 <body>
@@ -168,71 +176,43 @@
             <li><a href="{{ url_for('historial') }}">Historial de Búsqueda</a></li>
             <li><a href="{{ url_for('logout') }}">Cerrar Sesión</a></li>
         </ul>
-        <!-- Formulario de búsqueda en el menú -->
-        <form action="{{ url_for('buscar_motos') }}" method="get" style="display: inline;">
-            <label for="query" class="visually-hidden"></label>
+        <form action="{{ url_for('buscar_motos') }}" method="get">
             <input type="text" name="query" id="query" placeholder="Buscar..." onfocus="mostrarHistorial()">
             <button type="submit">Buscar</button>
         </form>
     </nav>
-    
-        {% block content %}
-        <div class="container">
-            <script>
-                function mostrarHistorial() {
-                    const historial = {{ historial_busqueda | tojson }};
-                    const queryInput = document.getElementById('query');
-                    if (historial.length > 0) {
-                        const datalist = document.createElement('datalist');
-                        datalist.id = 'historial';
-                        historial.forEach(query => {
-                            const option = document.createElement('option');
-                            option.value = query;
-                            datalist.appendChild(option);
-                        });
-                        queryInput.setAttribute('list', 'historial');
-                        document.body.appendChild(datalist);
-                    }
-                }
-                </script>
-                
-            <h2>Bienvenido a MUNDOSBK, {{ user_nombre }}</h2>
-    
-    
-    <!--contenido de afuera -->
+
+    {% block content %}
     <div class="container">
+        <h2>Bienvenido a MUNDOSBK, {{ user_nombre }}</h2>
+
+        <h2>Destacadas</h2>
         <div class="motorcycle-grid">
             <div class="motorcycle-card">
-                <img src="{{ url_for('static', filename='uploads/mt 09.jpg') }}" alt="Moto deportiva negra, estilo melo" class="motorcycle-image" width="640" height="480">
+                <img src="{{ url_for('static', filename='uploads/R.jpg') }}" alt="Moto deportiva negra, estilo melo" class="motorcycle-image">
                 <div class="motorcycle-info">
-                    <h3>Mt-09</h3>
-                    <p>La Yamaha MT-09 es una moto naked ágil y potente, con un motor tricilíndrico de 889 cc y un diseño agresivo. 
-                        Destaca por su rendimiento en carretera y tecnologías avanzadas para una conducción segura y personalizable.</p>
-                    <a href="https://moto-enthusiast.example.com/supersport-950" class="cta-button">Más información</a>
+                    <h3>Yamaha YZF-R1M</h3>
+                    <p>La Yamaha YZF-R1M es una moto inspirada en el mundo de MotoGP, diseñada para ofrecer una experiencia de conducción de pista en carretera.</p>
                 </div>
             </div>
             <div class="motorcycle-card">
-                <img src="{{ url_for('static', filename='uploads/cbr.jpg') }}" alt="Moto custom negra, estilo clásico" class="motorcycle-image" width="640" height="480">
+                <img src="{{ url_for('static', filename='uploads/CBR1000RR-R.png') }}" alt="Moto custom negra, estilo clásico" class="motorcycle-image">
                 <div class="motorcycle-info">
-                    <h3>CBR1000rr</h3>
-                    <p>La Honda CBR1000RR es una moto deportiva de alta gama, conocida por su potente motor de 999 cc, precisión en el manejo y avanzada tecnología. 
-                        Diseñada para ofrecer un rendimiento sobresaliente en pista y carretera.</p>
-                    <a href="https://moto-enthusiast.example.com/cruiser-deluxe" class="cta-button">Más información</a>
+                    <h3>Honda CBR1000RR-R Fireblade SP</h3>
+                    <p>La CBR1000RR-R Fireblade SP es una moto deportiva de alta tecnología, diseñada para el rendimiento en pista.</p>
                 </div>
             </div>
             <div class="motorcycle-card">
-                <img src="{{ url_for('static', filename='uploads/Aprilia RSV4.jpg') }}"alt="Moto de aventura verde, preparada para todo terreno" class="motorcycle-image" width="640" height="480">
+                <img src="{{ url_for('static', filename='uploads/Aprilia RSV4.jpg') }}" alt="Moto de aventura verde" class="motorcycle-image">
                 <div class="motorcycle-info">
-                    <h3>Aprilia rsv4</h3>
-                    <p>La Aprilia RSV4 es una moto deportiva de 1,099 cc con motor V4, conocida por su potencia y rendimiento sobresaliente. 
-                        Ofrece un manejo preciso y tecnología avanzada para un rendimiento óptimo en pista y carretera.</p>
-                    <a href="https://moto-enthusiast.example.com/adventure-explorer" class="cta-button">Más información</a>
+                    <h3>Aprilia RSV4</h3>
+                    <p>La Aprilia RSV4 es una moto deportiva de 1,099 cc con motor V4, conocida por su potencia y rendimiento sobresaliente.</p>
                 </div>
             </div>
         </div>
     </div>    
-        {% endblock %}
-    </main>
+    {% endblock %}
+
     <footer>
         <p>&copy; 2024 MUNDOSBK. Todos los derechos reservados.</p>
     </footer>

@@ -41,7 +41,7 @@ def add_moto():
                 foto_file.save(foto_path)
             
         nueva_moto = Motos(nombre=nombre, cantidad=int(cantidad), precio=int(precio), 
-                           foto=foto, descripcion=descripcion, marca_id=int(marca_id), usuarios_id=usuarios_id)
+        foto=foto, descripcion=descripcion, marca_id=int(marca_id), usuarios_id=usuarios_id)
         db.session.add(nueva_moto)
         db.session.commit()
         flash('moto agregada exitosamente.')

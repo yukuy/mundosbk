@@ -5,14 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Motos de Búsqueda</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        html, body {
+            height: 100%; /* Asegura que el html y el body ocupen toda la altura de la ventana */
             margin: 0;
             padding: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
             color: #333;
-            flex-direction: column;
-            padding: 20px;
+        }
+
+        header, footer {
+            background-color: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        footer {
+            font-size: 0.875rem;
+        }
+
+        .main-content {
+            flex: 1; /* Asegura que este contenedor crezca para ocupar el espacio disponible */
         }
 
         h2 {
@@ -25,6 +44,7 @@
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
+            padding: 20px; /* Asegura un espacio interno para el contenido */
         }
 
         .card {
@@ -45,12 +65,18 @@
             border-radius: 8px;
             margin-bottom: 10px;
             max-width: 100%;
-            height: auto;
+            height: 400px;
+            object-fit: cover;
         }
 
         .card p {
             margin: 5px 0;
             color: #666;
+        }
+
+        .resultado_busqueda {
+            text-align: center;
+            padding: 15px;
         }
     </style>
 </head>
@@ -58,25 +84,37 @@
     {% extends "base.html" %}
 
     {% block content %}
-    <h2>Resultados de la Búsqueda</h2>
-
-    <div class="moto-container">
-        {% for moto in motos %}
-        <div class="card">
-            <p>Nombre: {{ moto.nombre }}</p>
-            <p>Cantidad: {{ moto.cantidad }}</p>
-            <p>Precio: {{ moto.precio }}</p>
-            {% if moto.foto %}
-                <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
-                     alt="Foto de {{ moto.nombre }}">
+        <div class="main-content">
+            {% if motos|length == 0 %}
+                <div class="resultado_busqueda">
+                    <h2>No hay Resultados de la Búsqueda</h2>
+                </div>
             {% else %}
-                <p>No disponible</p>
+                <div class="resultado_busqueda">
+                    <h2>Resultados de la Búsqueda</h2>
+                </div>
+
+                <div class="moto-container">
+                    {% for moto in motos %}
+                        <div class="card">
+                            <p>Nombre: {{ moto.nombre }}</p>
+                            <p>Cantidad: {{ moto.cantidad }}</p>
+                            <p>Precio: {{ moto.precio }}</p>
+                            {% if moto.foto %}
+                                <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
+                                    alt="Foto de {{ moto.nombre }}">
+                            {% else %}
+                                <p>Foto no disponible</p>
+                            {% endif %}
+                            <a href="{{ url_for('ver_comentarios', moto_id=moto.id) }}">Más Información</a>
+                        </div>
+                    {% endfor %}
+                </div>
             {% endif %}
-            <a href="{{ url_for('ver_comentarios', moto_id=moto.id) }}">Mas Informacion</a>
         </div>
-        {% endfor %}
-        
-    </div>
     {% endblock %}
+    <footer>
+        <p>&copy; 2024 Motos de Búsqueda. Todos los derechos reservados.</p>
+    </footer>
 </body>
 </html>

@@ -5,26 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Historial de Búsqueda</title>
     <style>
+        /* Estilos generales */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
 
-    
+        /* Contenedor principal */
         .container {
+            flex: 1;
             max-width: 800px;
             margin: 2rem auto;
             padding: 1.5rem;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%
         }
+
+        /* Estilo de historial vacío */
         .no-history {
             text-align: center;
             color: #666;
         }
+
+        /* Elimina el borde inferior del último ítem de la lista */
         li:last-child {
-            border-bottom: none;}
+            border-bottom: none;
+        }
 
-
-        
-
+        /* Estilo del footer */
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #333;
+            color: #fff;
+            position: relative;
+            width: 97,5%;
+        }
     </style>
 </head>
 <body>
@@ -43,5 +65,10 @@
         </ul>
     </div>
     {% endblock %}
+
+    <!-- Footer fijo en la parte inferior -->
+    <footer>
+        <p>Footer contenido &copy; 2024</p>
+    </footer>
 </body>
 </html>
