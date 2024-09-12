@@ -38,15 +38,36 @@
             padding: 20px;
             flex: 1 1 48%;
             min-width: 300px;
-            text-align: center; /* Centramos el texto para coincidir con el catálogo */
+            text-align: center;
         }
 
         .moto-details img {
             border-radius: 8px;
             margin-bottom: 15px;
-            width: 400px; /* Asegura que la imagen ocupe todo el ancho del contenedor */
+            width: 400px;
             height: 400px;
-            object-fit: cover; /* Mantiene la proporción y cubre el área sin distorsionar la imagen */
+            object-fit: cover;
+        }
+
+        .embed-responsive {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Ajusta el ancho máximo del contenedor del video */
+            height: 0;
+            padding-bottom: 35%; /* Ajusta la altura en función del ancho (relación 2:1) */
+            margin: 0 auto; /* Centra el contenedor horizontalmente */
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #000; /* Fondo negro para los casos donde no haya video */
+        }
+
+        .embed-responsive iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         .moto-details p, .infovendedor p {
@@ -125,7 +146,7 @@
             50% {
                 transform: translateY(-10px);
             }
-        }
+        } 
     </style>
 </head>
 <body>
@@ -136,12 +157,22 @@
         <!-- Información de la moto -->
         <div class="moto-details">
             <h1>Información de {{ moto.nombre }}</h1>
-            <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" alt="Foto de {{ moto.nombre }}">
+            
+              <!-- Verificar si hay un video -->
+              {% if video_url %}
+              <div class="embed-responsive">
+                  <iframe src="{{ video_url }}" allow="autoplay; fullscreen"></iframe>
+              </div>
+            {% else %}
+                <!-- Si no hay video, mostrar la imagen de la moto -->
+                <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" alt="Foto de {{ moto.nombre }}" style="max-width: 100%; height: auto;">
+            {% endif %}
+          
             <p>Precio: {{ moto.precio }}</p>
             <p>Disponibles: {{ moto.cantidad }}</p>
             <label for="descripcion">Descripción:</label>
-            <p> {{moto.descripcion}}</p><br>
-
+            <p>{{ moto.descripcion }}</p><br>
+        
             <!-- Mostrar comentarios existentes -->
             <div class="comentarios">
                 <h4>Comentarios</h4>
@@ -149,13 +180,14 @@
                     <p>{{ comentario.usuarios.nombre }}: {{ comentario.comentario }}</p>
                 {% endfor %}
             </div>
-
+        
             <!-- Formulario para agregar un comentario -->
             <form action="{{ url_for('add_comentario', moto_id=moto.id) }}" method="POST">
                 <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
                 <button type="submit">Enviar</button>
             </form>
         </div>
+        
 
         <!-- Información del vendedor -->
         <div class="infovendedor">

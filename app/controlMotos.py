@@ -19,7 +19,7 @@ def motos():
 #ruta para el registro segun la secion 
 @app.route('/add_moto', methods=['GET', 'POST'])
 def add_moto():
-    #virificar la secion sea correcta
+    # Verificar si la sesión es válida
     if 'user_id' not in session:
         flash('Debes iniciar sesión para registrar.', 'warning')
         return redirect(url_for('login'))
@@ -29,8 +29,9 @@ def add_moto():
         cantidad = request.form.get('cantidad')
         precio = request.form.get('precio')
         foto = None
-        descripcion = request.form.get('descripcion')
-        marca_id = request.form.get('marca_id')
+        descripcion = request.form.get('descripcion') 
+        marca_id = request.form.get('marca_id') 
+        video_url = request.form.get('video_url')  
         usuarios_id = session['user_id']
         
         if 'foto' in request.files:
@@ -40,15 +41,18 @@ def add_moto():
                 foto_path = os.path.join('app/static/uploads', foto)
                 foto_file.save(foto_path)
             
+        # Crear la nueva moto
         nueva_moto = Motos(nombre=nombre, cantidad=int(cantidad), precio=int(precio), 
-        foto=foto, descripcion=descripcion, marca_id=int(marca_id), usuarios_id=usuarios_id)
+                           foto=foto, descripcion=descripcion, video_url=video_url, 
+                           marca_id=int(marca_id), usuarios_id=usuarios_id)
         db.session.add(nueva_moto)
         db.session.commit()
-        flash('moto agregada exitosamente.')
+        flash('Moto agregada exitosamente.')
         return redirect(url_for('motos'))
 
     marcas = Marca.query.all()
     return render_template('registrar_moto.html', marcas=marcas)
+
 # Ruta para editar los campos
 @app.route('/edit_motos/edit/<int:id>', methods=['GET', 'POST'])
 def edit_moto(id):
@@ -69,6 +73,7 @@ def edit_moto(id):
         motos.precio = request.form.get('precio')
         motos.descripcion = request.form.get('descripcion')
         motos.marca_id = request.form.get('marca_id')
+        motos.video_url = request.form.get('video_url') 
         
         if not motos.nombre or not motos.cantidad or not motos.precio or not motos.descripcion or not motos.marca_id:
             flash('Todos los campos son requeridos.')
@@ -112,11 +117,6 @@ def delete_moto(id):
     flash('Moto eliminada correctamente.', 'success')
     
     return redirect(url_for('motos'))
-
-
-
-
-
 
 #rutas para el catalogo
 @app.route('/catalogo')
