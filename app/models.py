@@ -18,6 +18,7 @@ class Motos(db.Model):
     foto = db.Column(db.String(200))
     video_url = db.Column(db.String(200))
     descripcion = db.Column(db.Text)
+    
     marca_id = db.Column(db.Integer, db.ForeignKey('marca.id'), nullable=False)  
     usuarios_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False) 
     

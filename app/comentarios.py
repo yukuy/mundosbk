@@ -13,7 +13,7 @@ def add_comentario(moto_id):
     comentario = request.form.get('comentario')
     if not comentario:
         flash('El comentario no puede estar vacío.', 'error')
-        return redirect(url_for('ver_comentarios', moto_id=moto_id))
+        return redirect(url_for('info_motos', moto_id=moto_id))
 
     # Obtener el ID del usuario desde la sesión
     user_id = session['user_id']
@@ -24,7 +24,7 @@ def add_comentario(moto_id):
     db.session.commit()
 
     flash('Comentario agregado exitosamente!', 'success')
-    return redirect(url_for('ver_comentarios', moto_id=moto_id))
+    return redirect(url_for('info_motos', moto_id=moto_id))
 
 #ruta para ver y poder agregar nuevos comentarios y ver las caracteristicas de cada moto
 @app.route('/ver_comentarios/<int:moto_id>', methods=['GET'])
@@ -59,4 +59,4 @@ def ver_comentarios(moto_id):
             video_id = video_url.split('shorts/')[-1]  # Extraer solo el ID del Short
             embed_url = f"https://www.youtube.com/embed/{video_id}?autoplay=1&mute=1"
 
-    return render_template('ver_comentarios.html', moto=moto, comentarios=comentarios, vendedor=vendedor, video_url=embed_url)
+    return render_template('info_motos.html', moto=moto, comentarios=comentarios, vendedor=vendedor, video_url=embed_url)

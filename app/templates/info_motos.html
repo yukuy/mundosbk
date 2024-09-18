@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comentarios de Moto</title>
+    <title>Informacion de la Moto</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -160,8 +160,8 @@
             
               <!-- Verificar si hay un video -->
               {% if video_url %}
-              <div class="embed-responsive">
-                  <iframe src="{{ video_url }}" allow="autoplay; fullscreen"></iframe>
+              <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="{{ video_url }}" allow="autoplay; fullscreen"></iframe>
               </div>
             {% else %}
                 <!-- Si no hay video, mostrar la imagen de la moto -->

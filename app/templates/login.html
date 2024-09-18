@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
+    <!--codigo para responsil-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
+
     <style>
         body {
             margin: 0;
@@ -109,10 +112,41 @@
         a:hover {
             color: #154360;
         }
+
+        .flash-messages {
+            transition: opacity 0.5s ease; /* Transición suave */
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
+    <!--informacion que se requiere-->
     <div class="container">
+         <!-- Sección para mostrar los mensajes flash -->
+         <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul>
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+        <script>
+            // Espera 1 segundo y luego aplica un efecto de desvanecimiento
+            setTimeout(function() {
+                var flashMessages = document.querySelector('.flash-messages');
+                if (flashMessages) {
+                    flashMessages.style.opacity = '0';  // Desvanece el mensaje
+                    setTimeout(function() {
+                        flashMessages.style.display = 'none';  // Oculta el mensaje después del desvanecimiento
+                    }, 500);  // Espera 500ms más para completar el desvanecimiento
+                }
+            }, 1000);  // 1000 milisegundos = 1 segundo
+        </script>
+
         <h1>Iniciar Sesión</h1>
         <form method="POST" action="{{ url_for('login') }}">
             <label for="correo">Correo</label>

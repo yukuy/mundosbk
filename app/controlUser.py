@@ -3,6 +3,7 @@ from app import app
 from app.models import Usuarios, db
 from werkzeug.security import generate_password_hash, check_password_hash
 
+#ruta para registrar cada usuario
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -26,8 +27,14 @@ def register():
     
     return render_template('register.html')
 
+#ruta para el login
 @app.route('/', methods=['GET', 'POST'])
 def login():
+    
+    #si el algun usuario ya ainicio secion redirigirlo al ala pagina prinsipal   
+    if 'user_id' in session:
+        return redirect(url_for("base")) 
+      
     if request.method == 'POST':
         correo = request.form['correo']
         clave = request.form['clave']
@@ -46,6 +53,7 @@ def login():
     
     return render_template('login.html')
 
+#ruta para el cierre de session
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
@@ -53,6 +61,7 @@ def logout():
     flash('Has cerrado sesión correctamente.', 'success')
     return redirect(url_for('login'))
 
+#ruta para abrir la pagina principal
 @app.route('/base')
 def base():
     if 'user_id' not in session:
