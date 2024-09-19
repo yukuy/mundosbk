@@ -1,7 +1,9 @@
 from flask import render_template, request, redirect, url_for, flash, session
 from app import app
 from app.models import Usuarios, db
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 #ruta para registrar cada usuario
 @app.route('/register', methods=['GET', 'POST'])
@@ -11,12 +13,22 @@ def register():
         correo = request.form['correo']
         clave = request.form['clave']
         telefono = request.form['telefono']
+        foto = None
         
+        #agregar foto
+        if 'foto' in request.files:
+            foto_file = request.files['foto']
+            if foto_file.filename != '':
+                foto = foto_file.filename
+                foto_path = os.path.join('app/static/uploads', foto)
+                foto_file.save(foto_path)
+                
         # Hash de la contraseña utilizando un método específico
         clave_hash = generate_password_hash(clave, method='pbkdf2:sha256', salt_length=8)
-        
+
         try:
-            nuevo_usuarios = Usuarios(nombre=nombre, correo=correo, clave=clave_hash, telefono=telefono)
+            nuevo_usuarios = Usuarios(nombre=nombre, correo=correo, clave=clave_hash, 
+                                      telefono=telefono, foto=foto)
             db.session.add(nuevo_usuarios)
             db.session.commit()
             flash('Registro exitoso!', 'success')
@@ -41,11 +53,11 @@ def login():
         
         # Buscar el usuario por correo
         usuario = Usuarios.query.filter_by(correo=correo).first()
-        
         if usuario and check_password_hash(usuario.clave, clave):
             session['user_id'] = usuario.id
             session['user_nombre'] = usuario.nombre
-            flash('fl!', 'success')
+            session.permanent = True  # Marca la sesión como permanente
+            flash('¡Inicio de sesión exitoso!', 'success')
             return redirect(url_for('base'))
         else:
             flash('Correo o contraseña incorrectos', 'error')
@@ -73,3 +85,4 @@ def base():
 
     # Pasar el historial de búsqueda y el nombre de usuario al renderizar la plantilla
     return render_template('base.html', user_nombre=session['user_nombre'], historial_busqueda=historial_busqueda)
+

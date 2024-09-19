@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <!--codigo para responsil-->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
 
     <style>
         body {
@@ -120,7 +118,7 @@
 
         <div class="container">
             <h1>Registro</h1>
-            <form method="POST" action="{{ url_for('register') }}">
+            <form method="post" enctype="multipart/form-data">
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" required>
 
@@ -132,6 +130,9 @@
 
                 <label for="telefono">Teléfono:</label>
                 <input type="text" id="telefono" name="telefono">
+
+                <label for="foto">Foto:</label>
+                <input type="file" id="foto" name="foto"><br>
 
                 <button type="submit">Registrar</button>
             </form>

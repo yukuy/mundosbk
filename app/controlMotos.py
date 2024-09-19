@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash, session
 from app import app
-from app.models import Motos, Marca, Usuarios, db
+from app.models import Motos, Usuarios, db
 import os
 
 
@@ -30,7 +30,8 @@ def add_moto():
         precio = request.form.get('precio')
         foto = None
         descripcion = request.form.get('descripcion') 
-        marca_id = request.form.get('marca_id') 
+        marca = request.form.get('marca') 
+        cilindrada =request.form.get('cilindrada')
         video_url = request.form.get('video_url')  
         usuarios_id = session['user_id']
         
@@ -44,14 +45,14 @@ def add_moto():
         # Crear la nueva moto
         nueva_moto = Motos(nombre=nombre, cantidad=int(cantidad), precio=int(precio), 
                            foto=foto, descripcion=descripcion, video_url=video_url, 
-                           marca_id=int(marca_id), usuarios_id=usuarios_id)
+                           marca=marca, cilindrada=int(cilindrada), usuarios_id=usuarios_id)
         db.session.add(nueva_moto)
         db.session.commit()
         flash('Moto agregada exitosamente.')
         return redirect(url_for('motos'))
 
-    marcas = Marca.query.all()
-    return render_template('registrar_moto.html', marcas=marcas)
+    
+    return render_template('registrar_moto.html')
 
 # Ruta para editar los campos
 @app.route('/edit_motos/edit/<int:id>', methods=['GET', 'POST'])
@@ -72,10 +73,11 @@ def edit_moto(id):
         motos.cantidad = request.form.get('cantidad')
         motos.precio = request.form.get('precio')
         motos.descripcion = request.form.get('descripcion')
-        motos.marca_id = request.form.get('marca_id')
+        motos.marca = request.form.get('marca')
+        motos.cilindrada = request.form.get('cilindrada')
         motos.video_url = request.form.get('video_url') 
         
-        if not motos.nombre or not motos.cantidad or not motos.precio or not motos.descripcion or not motos.marca_id:
+        if not motos.nombre or not motos.cantidad or not motos.precio or not motos.descripcion or not motos.marca or not motos.cilindrada:
             flash('Todos los campos son requeridos.')
             return redirect(url_for('edit_moto', id=id))
         
@@ -94,9 +96,9 @@ def edit_moto(id):
         flash('Moto actualizada exitosamente.')
         return redirect(url_for('motos'))
 
-    marcas = Marca.query.all()
     
-    return render_template('editar_moto.html', motos=motos, marcas=marcas)
+    
+    return render_template('editar_moto.html', motos=motos)
 
 # Eliminar un registro
 @app.route('/delete_moto/delete/<int:id>', methods=['GET', 'POST'])

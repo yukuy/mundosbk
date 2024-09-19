@@ -4,8 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agregar Moto</title>
-    <!--codigo para responsil-->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
 
     <style>
         body, html {
@@ -108,6 +106,12 @@
             <form method="post" enctype="multipart/form-data">
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" required><br>
+
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" name="marca" required><br>
+
+                <label for="cilindrada">cilindrada:</label>
+                <input type="text" id="cilindrada" name="cilindrada" required><br>
                 
                 <label for="cantidad">Cantidad:</label>
                 <input type="number" id="cantidad" name="cantidad" required><br>
@@ -124,12 +128,7 @@
                 <label for="descripcion">Descripcion:</label>
                 <textarea name="descripcion" placeholder="Descripción de la moto:"></textarea>
                 
-                <label for="marca_id">Marca:</label>
-                <select id="marca_id" name="marca_id" required>
-                    {% for marca in marcas %}
-                    <option value="{{ marca.id }}">{{ marca.nombre }}</option>
-                    {% endfor %}
-                </select><br>
+               
                 
                 <button type="submit">Agregar Moto</button>
             </form>
