@@ -1,8 +1,15 @@
+import os
 from app import app, db
 
+# Crear tablas en la base de datos
 with app.app_context():
     db.create_all()
     print("Tablas creadas con éxito.")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Obtener el puerto de la variable de entorno (Render asigna dinámicamente un puerto)
+    port = int(os.environ.get("PORT", 5000))
+    
+    # Ejecutar la aplicación en '0.0.0.0' para aceptar conexiones externas
+    app.run(host='0.0.0.0', port=port, debug=True)
+
