@@ -83,6 +83,18 @@ def base():
     # Obtener el historial de búsqueda desde la sesión o inicializarlo como una lista vacía
     historial_busqueda = session.get('historial_busqueda', [])
 
-    # Pasar el historial de búsqueda y el nombre de usuario al renderizar la plantilla
-    return render_template('base.html', user_nombre=session['user_nombre'], historial_busqueda=historial_busqueda)
+    # Obtener la información del usuario desde la base de datos
+    usuario = Usuarios.query.get(session['user_id'])
+    
+    # Pasar el historial de búsqueda, el nombre de usuario y el objeto usuario
+    return render_template('base.html', user_nombre=session['user_nombre'], historial_busqueda=historial_busqueda, usuario=usuario)
 
+
+#logo del perfil
+@app.route('/perfil/<int:user_id>')
+def perfil_usuario(user_id):
+    usuario = Usuarios.query.get(user_id)
+    if usuario:
+        return render_template('perfil.html', usuario=usuario)
+    else:
+        return "usuario no encontrado", 404

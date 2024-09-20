@@ -3,9 +3,11 @@ from app import app, db
 
 # Crear tablas en la base de datos
 with app.app_context():
-    db.create_all()
-    print("Tablas creadas con éxito.")
+    try:
+        db.create_all()  # Intenta crear todas las tablas
+        print("Tablas creadas con éxito.")
+    except Exception as e:
+        print(f"Error al crear tablas: {e}")
 
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+if __name__ == "__main__":
+    app.run(debug=True)
