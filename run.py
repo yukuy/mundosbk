@@ -6,10 +6,8 @@ with app.app_context():
     db.create_all()
     print("Tablas creadas con éxito.")
 
-if __name__ == "__main__":
-    # Obtener el puerto de la variable de entorno (Render asigna dinámicamente un puerto)
-    port = int(os.environ.get("PORT", 5000))
-    
-    # Ejecutar la aplicación en '0.0.0.0' para aceptar conexiones externas
-    app.run(host='0.0.0.0', port=port, debug=True)
+
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
 
