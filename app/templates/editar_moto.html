@@ -11,8 +11,8 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
-            background-color: #f0f0f0;
+            background: linear-gradient(to bottom, #000000, #4d4d4d); /* Degradado de negro a gris */
+            overflow-y: auto; /* Añadido para permitir desplazamiento si es necesario */
         }
 
         .background-container {
@@ -27,8 +27,6 @@
             align-items: center;
             width: 100%;
             max-width: 500px;
-            overflow: hidden;
-            
         }
 
         .container {
@@ -65,7 +63,8 @@
         input[type="text"],
         input[type="number"],
         input[type="file"],
-        select {
+        select,
+        textarea {
             width: 100%;
             max-width: 300px;
             padding: 0.8rem;
@@ -98,10 +97,17 @@
         button[type="submit"]:hover {
             background-color: #555;
         }
+
+        /* Asegurar que el contenido no se corte en pantallas pequeñas */
+        @media (min-height: 500px) {
+            body {
+                align-items: flex-start; /* Alinear hacia arriba en lugar de centrar */
+            }
+        }
     </style>
 </head>
 <body>
-    
+
     {% block content %}
     <div class="background-container">
         <div class="container">
@@ -111,17 +117,17 @@
                 <input type="text" id="nombre" name="nombre" value="{{ motos.nombre }}" required><br>
 
                 <label for="marca">Marca:</label>
-                <input type="text" id="marca" name="marca"  value="{{motos.marca}}" required><br>
+                <input type="text" id="marca" name="marca" value="{{ motos.marca }}" required><br>
 
-                <label for="cilindrada">cilindrada:</label>
-                <input type="text" id="cilindrada" name="cilindrada" value="{{motos.cilindrada}}" required><br>
-                
+                <label for="cilindrada">Cilindrada:</label>
+                <input type="text" id="cilindrada" name="cilindrada" value="{{ motos.cilindrada }}" required><br>
+
                 <label for="cantidad">Cantidad:</label>
                 <input type="number" id="cantidad" name="cantidad" value="{{ motos.cantidad }}" required><br>
-                
+
                 <label for="precio">Precio:</label>
                 <input type="number" id="precio" name="precio" value="{{ motos.precio }}" required><br>
-                
+
                 <label for="foto">Foto:</label>
                 <input type="file" id="foto" name="foto" accept="image/*"><br>
                 {% if motos.foto %}
@@ -129,17 +135,16 @@
                 {% endif %}
 
                 <label for="video_url">Enlace del video promocional:</label>
-                <input type="text" name="video_url" value="{{ motos.video_url }}" placeholder="URL del video de YouTube">
-    
+                <input type="text" name="video_url" value="{{ motos.video_url }}" placeholder="URL del video de YouTube"><br>
 
-                <label for="descripcion">Descripcion:</label>
+                <label for="descripcion">Descripción:</label>
                 <textarea id="descripcion" name="descripcion" required>{{ motos.descripcion }}</textarea><br>
-                
-                
+
                 <button type="submit">Actualizar Moto</button>
             </form>
         </div>
     </div>
     {% endblock %}
+
 </body>
 </html>
