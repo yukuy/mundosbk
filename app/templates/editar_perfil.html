@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil</title>
+</head>
+<body>
+    <div class="editar">
+        <form method="POST" enctype="multipart/form-data">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" value="{{ usuario.nombre }}" required>
+        
+            <label for="correo">Correo:</label>
+            <input type="email" name="correo" value="{{ usuario.correo }}" required>
+        
+            <label for="telefono">Teléfono:</label>
+            <input type="text" name="telefono" value="{{ usuario.telefono }}" required>
+        
+            <label for="clave">Nueva Contraseña:</label>
+            <input type="password" name="clave" placeholder="Dejar en blanco si no deseas cambiar">
+
+            <label for="foto">Foto:</label>
+            <input type="file" id="foto" name="foto"><br>
+        
+            <button type="submit">Actualizar</button>
+        </form>
+    </div>
+</body>
+</html>
+        

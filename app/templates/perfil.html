@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+</head>
+<body>
+    <div class="perfil">
+        <h2>{{usuario.nombre}}<h1>
+        
+        <from method="post" enctype="multipart/form-data">
+            {%if usuario.foto%}
+            <img src="{{url_for('static', filename='uploads/' ~ usuario.foto) }}" alt="foto de {{usuario.nombre}}" width="100px"><br>
+            {%endif%}
+            
+            <p>Correo:{{usuario.correo}}</p>
+            <p>Telefono: {{usuario.telefono}}<p>
+            <p>Numero de ventas: {{usuario.numero_ventas}}
+            <p>clificacion: {{usuario.calificacion}}
+            <p>Tiempo en la plataforma: {{ (datetime.utcnow() - usuario.fecha_registro).days }} días</p>
+
+            <a href="{{ url_for('editar_perfil', user_id=usuario.id) }}">Editar perfil</a>
+            <br>
+            <a href="{{ url_for('base') }}">bolver</a>
+            
+    </div>
+</body>
+</html>
