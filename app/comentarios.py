@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for, request, flash, session
 from app import app
+from datetime import datetime
 from app.models import Motos, Comentarios, Usuarios, db
 
 # Ruta para los comentarios
@@ -59,4 +60,7 @@ def ver_comentarios(moto_id):
             video_id = video_url.split('shorts/')[-1]  # Extraer solo el ID del Short
             embed_url = f"https://www.youtube.com/embed/{video_id}?autoplay=1&mute=1"
 
-    return render_template('info_motos.html', moto=moto, comentarios=comentarios, vendedor=vendedor, video_url=embed_url)
+    return render_template('info_motos.html', moto=moto, comentarios=comentarios, 
+                           vendedor=vendedor, video_url=embed_url, datetime=datetime)
+
+

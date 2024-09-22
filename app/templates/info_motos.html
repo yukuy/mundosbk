@@ -147,6 +147,22 @@
                 transform: translateY(-10px);
             }
         } 
+        .user-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          }
+        .logo{
+            display:flex;
+        }
+        .datos {
+            text-align: left; /* Alinea el texto a la izquierda */
+            margin-left: 10px; /* Espacio a la izquierda del texto */
+            margin-top: 40px; /* Espacio superior de 40px */
+        }
     </style>
 </head>
 <body>
@@ -191,11 +207,15 @@
 
         <!-- Información del vendedor -->
         <div class="infovendedor">
-            <h1>Vendedor</h1>
-            <p>Nombre: {{ vendedor.nombre }}</p>
-            <p>Correo: {{ vendedor.correo }}</p>  
-            <p>Teléfono: {{ vendedor.telefono }}</p>
-
+            <h1>informacion del vendedor</h1>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='uploads/' ~ vendedor.foto) }}" alt="Logo del vendedor" style="width: 100px; height: 100px; border-radius: 50%;">
+                <div class="datos">
+                    <p>{{ vendedor.nombre }}</p>
+                    <p>Tiempo en la plataforma: {{ (datetime.utcnow() - vendedor.fecha_registro).days }} días</p>
+                </div>
+            </div>
+            <br>
             <!-- Logo de WhatsApp como enlace -->
             <div class="whatsapp-logo">
                 <a href="https://wa.me/57{{ vendedor.telefono }}?text=Hola,%20estoy%20interesado%20en%20la%20moto%20{{ moto.nombre }}" target="_blank">
