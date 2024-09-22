@@ -25,7 +25,7 @@ def add_comentario(moto_id):
     db.session.commit()
 
     flash('Comentario agregado exitosamente!', 'success')
-    return redirect(url_for('info_motos', moto_id=moto_id))
+    return redirect(url_for('ver_comentarios', moto_id=moto_id))
 
 #ruta para ver y poder agregar nuevos comentarios y ver las caracteristicas de cada moto
 @app.route('/ver_comentarios/<int:moto_id>', methods=['GET'])
@@ -63,4 +63,18 @@ def ver_comentarios(moto_id):
     return render_template('info_motos.html', moto=moto, comentarios=comentarios, 
                            vendedor=vendedor, video_url=embed_url, datetime=datetime)
 
+"""
+@app.route('/eliminar_comentarios/<int:moto_id>', methods=['POST'])
+def eliminar_comentarios(moto_id):
+    # Verificar si el usuario está autenticado
+    if 'user_id' not in session:
+        flash('Debes iniciar sesión para eliminar comentarios.', 'warning')
+        return redirect(url_for('login'))
 
+    # Eliminar todos los comentarios asociados a la moto
+    Comentarios.query.filter_by(idMotos=moto_id).delete()
+    db.session.commit()
+
+    flash('Todos los comentarios han sido eliminados exitosamente!', 'success')
+    return redirect(url_for('ver_comentarios', moto_id=moto_id))
+"""
