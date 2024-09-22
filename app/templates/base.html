@@ -179,6 +179,8 @@
 
     
     </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
   </head>
   <body>
     <header>
@@ -186,18 +188,35 @@
       <p>Tu Pasión sobre Dos Ruedas</p>
     </header>
 
-    <nav>
-      <ul>
-        <li><a href="{{ url_for('base') }}">Inicio</a></li>
-        <li><a href="{{ url_for('catalogo') }}">Catálogo</a></li>
-        <li><a href="{{ url_for('motos') }}">Agregar</a></li>
-        <li><a href="{{ url_for('historial') }}">Historial de Búsqueda</a></li>
-        <li><a href="{{ url_for('logout') }}">Cerrar Sesión</a></li>
-      </ul>
-      <form action="{{ url_for('buscar_motos') }}" method="get">
-        <input type="text" name="query" id="query" placeholder="Buscar..." onfocus="mostrarHistorial()" required/>
-        <button type="submit">Buscar</button>
-      </form>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('base') }}">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('catalogo') }}">Catálogo</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('motos') }}">Agregar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('historial') }}">Historial de Búsqueda</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('logout') }}">Cerrar Sesión</a>
+            </li>
+          </ul>
+          <form class="d-flex" action="{{ url_for('buscar_motos') }}" method="get">
+            <input class="form-control me-2" type="search" name="query" id="query" placeholder="Buscar..." onfocus="mostrarHistorial()" required>
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+          </form>
+        </div>
+      </div>
     </nav>
 
         <!-- Sección para mostrar los mensajes flash -->
@@ -230,7 +249,7 @@
     {% block content %}
     <div class="container">
       <div class="perfil">
-        <h2>Bienvenido a MUNDOSBK, {{ user_nombre }}</h2>
+        <h2>Bienvenido a MUNDOSBK, {{ usuario.nombre }}</h2>
 
 
         {% if session.get('user_id') and usuario %}
@@ -294,7 +313,9 @@
     <footer>
       <p>&copy; 2024 MUNDOSBK. Todos los derechos reservados.</p>
     </footer>
-
-    
+    <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
   </body>
 </html>

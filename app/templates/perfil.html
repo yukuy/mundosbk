@@ -4,26 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+    
+        .perfil {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+    
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    
+        img {
+            border-radius: 50%;
+            border: 2px solid #3498db;
+            margin-bottom: 15px;
+        }
+    
+        p {
+            color: #555;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+    
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #3498db;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+    
+        a:hover {
+            background-color: #2980b9;
+        }
+    
+        .clificacion {
+            display: inline-block;
+            margin-top: 10px;
+            color: #f39c12; /* Color para la calificación */
+            font-weight: bold;
+        }
+    </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="perfil">
-        <h2>{{usuario.nombre}}<h1>
+        <h2>{{ usuario.nombre }}</h2>
         
-        <from method="post" enctype="multipart/form-data">
-            {%if usuario.foto%}
-            <img src="{{url_for('static', filename='uploads/' ~ usuario.foto) }}" alt="foto de {{usuario.nombre}}" width="100px"><br>
-            {%endif%}
+        <form method="post" enctype="multipart/form-data">
+            {% if usuario.foto %}
+            <img src="{{ url_for('static', filename='uploads/' ~ usuario.foto) }}" alt="foto de {{ usuario.nombre }}" width="100px"><br>
+            {% endif %}
             
-            <p>Correo:{{usuario.correo}}</p>
-            <p>Telefono: {{usuario.telefono}}<p>
-            <p>Numero de ventas: {{usuario.numero_ventas}}
-            <p>clificacion: {{usuario.calificacion}}
+            <p>Correo: {{ usuario.correo }}</p>
+            <p>Teléfono: {{ usuario.telefono }}</p>
+            <p>Número de ventas: {{ usuario.numero_ventas }}</p>
+            <p class="clificacion">Calificación: {{ usuario.calificacion }}</p>
             <p>Tiempo en la plataforma: {{ (datetime.utcnow() - usuario.fecha_registro).days }} días</p>
 
             <a href="{{ url_for('editar_perfil', user_id=usuario.id) }}">Editar perfil</a>
             <br>
-            <a href="{{ url_for('base') }}">bolver</a>
-            
+            <a href="{{ url_for('base') }}">Volver</a>
+        </form>
     </div>
 </body>
 </html>
