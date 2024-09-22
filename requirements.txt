@@ -5,7 +5,7 @@ flask==2.2.5
 idna==3.3
 itsdangerous==2.1.0
 Jinja2==3.0.3
-MarkupSafe==2.1.0
+MarkupSafe==2.1.1
 requests==2.27.1
 urllib3==1.26.9
 Werkzeug==2.2.2
