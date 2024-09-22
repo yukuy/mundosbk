@@ -1,13 +1,11 @@
-import os
+import os  
 from app import app, db
 
-# Crear tablas en la base de datos
+# Crear tablas en la base de datos al iniciar la aplicación
 with app.app_context():
-    try:
-        db.create_all()  # Intenta crear todas las tablas
-        print("Tablas creadas con éxito.")
-    except Exception as e:
-        print(f"Error al crear tablas: {e}")
+    db.create_all()  # Crea las tablas al iniciar la aplicación
+    print("Tablas creadas con éxito.")
 
 if __name__ == "__main__":
     app.run(debug=True)
+
