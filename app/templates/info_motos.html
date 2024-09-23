@@ -238,13 +238,6 @@
                 <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
                 <button type="submit">Enviar</button>
             </form>
-
-            <form action="{{ url_for('agregar_calificacion', vendedor_id=vendedor.id) }}" method="POST">
-                <label for="calificacion">Calificación (1-5):</label>
-                <input type="number" name="calificacion" min="1" max="5" required>
-                <button type="submit">Enviar Calificación</button>
-            </form>
-            
         </div>
         <!--calificar al vendedor-->
         <div class="calificacion-contenedor">
