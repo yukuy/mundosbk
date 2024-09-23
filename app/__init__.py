@@ -18,3 +18,4 @@ from app import controlMotos
 from app import controlUser
 from app import comentarios
 from app import historial
+from app import calificaciones

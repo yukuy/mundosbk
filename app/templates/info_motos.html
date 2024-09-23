@@ -125,7 +125,43 @@
         button:hover {
             background-color: #218838;
         }
+        /* Contenedor de la calificación */
+        .calificacion-contenedor {
+            margin: 20px 0;
+            text-align: center;  /* Centrar el formulario */
+            background-color: #f0f8ff;  /* Un fondo azul claro agradable */
+            padding: 20px;  /* Espacio alrededor del contenido */
+            border-radius: 15px;  /* Bordes redondeados */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra suave para dar profundidad */
+            border: 2px solid #00bfa5;  /* Borde color turquesa */
+        }
 
+        /* Estilos para el sistema de calificación con estrellas */
+        .rating {
+            direction: rtl;  /* Invertir el orden de las estrellas */
+            unicode-bidi: bidi-override;  /* Para la correcta inversión */
+            display: inline-block;
+        }
+
+        .rating input {
+            display: none;  /* Ocultar los botones de radio */
+        }
+
+        .rating label {
+            font-size: 2.5em;  /* Tamaño de las estrellas */
+            color: #ccc;  /* Color gris claro por defecto */
+            cursor: pointer;  /* Mostrar el cursor como una mano al pasar */
+            transition: color 0.3s ease;  /* Transición suave al cambiar de color */
+        }
+
+        .rating input:checked ~ label {
+            color: #ff9800;  /* Estrellas doradas seleccionadas */
+        }
+
+        .rating label:hover,
+        .rating label:hover ~ label {
+            color: #ff9800;  /* Estrellas doradas al pasar el cursor */
+        }
         /* Estilo para el logo de WhatsApp */
         .whatsapp-logo {
             display: inline-block;
@@ -202,26 +238,56 @@
                 <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
                 <button type="submit">Enviar</button>
             </form>
-        </div>
-        
-        
 
-        <!-- Información del vendedor -->
-        <div class="infovendedor">
-            <h1>informacion del vendedor</h1>
-            <div class="logo">
-                <img src="{{ url_for('static', filename='uploads/' ~ vendedor.foto) }}" alt="Logo del vendedor" style="width: 100px; height: 100px; border-radius: 50%;">
-                <div class="datos">
-                    <p>{{ vendedor.nombre }}</p>
-                    <p>Tiempo en la plataforma: {{ (datetime.utcnow() - vendedor.fecha_registro).days }} días</p>
+            <form action="{{ url_for('agregar_calificacion', vendedor_id=vendedor.id) }}" method="POST">
+                <label for="calificacion">Calificación (1-5):</label>
+                <input type="number" name="calificacion" min="1" max="5" required>
+                <button type="submit">Enviar Calificación</button>
+            </form>
+            
+        </div>
+        <!--calificar al vendedor-->
+        <div class="calificacion-contenedor">
+            <form action="{{ url_for('agregar_calificacion', vendedor_id=vendedor.id) }}" method="POST">
+                <label for="calificacion">Calificación:</label>
+                <div class="rating">
+                    <input type="radio" id="star5" name="calificacion" value="5" />
+                    <label for="star5" title="5 estrellas">☆</label>
+        
+                    <input type="radio" id="star4" name="calificacion" value="4" />
+                    <label for="star4" title="4 estrellas">☆</label>
+        
+                    <input type="radio" id="star3" name="calificacion" value="3" />
+                    <label for="star3" title="3 estrellas">☆</label>
+        
+                    <input type="radio" id="star2" name="calificacion" value="2" />
+                    <label for="star2" title="2 estrellas">☆</label>
+        
+                    <input type="radio" id="star1" name="calificacion" value="1" />
+                    <label for="star1" title="1 estrella">☆</label>
                 </div>
-            </div>
-            <br>
-            <!-- Logo de WhatsApp como enlace -->
-            <div class="whatsapp-logo">
-                <a href="https://wa.me/57{{ vendedor.telefono }}?text=Hola,%20estoy%20interesado%20en%20la%20moto%20{{ moto.nombre }}" target="_blank">
-                    <img src="{{ url_for('static', filename='uploads/whatsapp-logo.png') }}" alt="WhatsApp Logo">
-                </a>
+                <button type="submit">Enviar Calificación</button>
+            </form>
+             <!-- Información del vendedor -->
+            <div class="infovendedor">
+                <h1>informacion del vendedor</h1>
+                <div class="logo">
+                    <a href="{{ url_for('perfil_vendedor', user_id=vendedor.id) }}">
+                        <img src="{{ url_for('static', filename='uploads/' ~ vendedor.foto) }}" alt="Logo del vendedor" 
+                        style=" width: 100px; height: 100px; border-radius: 50%;">
+                    </a>
+                    <br>
+                    <div class="datos">
+                        <p>{{ vendedor.nombre }}</p>
+                    </div>   
+                </div>
+                <br>
+                <!-- Logo de WhatsApp como enlace -->
+                <div class="whatsapp-logo">
+                    <a href="https://wa.me/57{{ vendedor.telefono }}?text=Hola,%20estoy%20interesado%20en%20la%20moto%20{{ moto.nombre }}" target="_blank">
+                        <img src="{{ url_for('static', filename='uploads/logo whatsapp.jpg') }}" alt="WhatsApp Logo">
+                    </a>
+                </div>
             </div>
         </div>
     </div>

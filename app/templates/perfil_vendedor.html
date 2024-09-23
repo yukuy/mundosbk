@@ -54,7 +54,7 @@
         a:hover {
             background-color: #2980b9;
         }
-        /* Contenedor de las estrellas */
+    
         .estrellas-promedio {
             display: flex;
             justify-content: center;  /* Centrar estrellas */
@@ -89,31 +89,28 @@
 </head>
 <body>
     <div class="perfil">
-        <h2>{{ usuario.nombre }}</h2>
+        <h2>{{ vendedor.nombre }}</h2>
         
         <form method="post" enctype="multipart/form-data">
-            {% if usuario.foto %}
-            <img src="{{ url_for('static', filename='uploads/' ~ usuario.foto) }}" alt="foto de {{ usuario.nombre }}" width="100px"><br>
+            {% if vendedor.foto %}
+            <img src="{{ url_for('static', filename='uploads/' ~ vendedor.foto) }}" alt="foto de {{ vendedor.nombre }}" width="100px"><br>
             {% endif %}
             
-            <p>Correo: {{ usuario.correo }}</p>
-            <p>Teléfono: {{ usuario.telefono }}</p>
-            <p>Número de ventas: {{ usuario.numero_ventas }}</p>
+            <p>Correo: {{ vendedor.correo }}</p>
+            <p>Teléfono: {{ vendedor.telefono }}</p>
+            <p>Número de ventas: {{ vendedor.numero_ventas }}</p>
             <p>calificacion:<p>
-                <!-- Contenedor de las estrellas del promedio -->
-                <div class="estrellas-promedio">
-                    {% for i in range(1, 6) %}
-                        <span class="estrella {% if i <= usuario.calificacion_promedio %}llena{% elif i - usuario.calificacion_promedio < 1 %}media{% endif %}">
-                            &#9733;
-                        </span>
-                    {% endfor %}
-                </div>
-                
-            <p>Tiempo en la plataforma: {{ (datetime.utcnow() - usuario.fecha_registro).days }} días</p>
+            <!-- Contenedor de las estrellas del promedio -->
+            <div class="estrellas-promedio">
+                {% for i in range(1, 6) %}
+                    <span class="estrella {% if i <= vendedor.calificacion_promedio %}llena{% elif i - vendedor.calificacion_promedio < 1 %}media{% endif %}">
+                        &#9733;
+                    </span>
+                {% endfor %}
+            </div>
+            <p>Tiempo en la plataforma: {{ (datetime.utcnow() - vendedor.fecha_registro).days }} días</p>
 
-            <a href="{{ url_for('editar_perfil', user_id=usuario.id) }}">Editar perfil</a>
-            <br>
-            <a href="{{ url_for('base') }}">Volver</a>
+            <a href="{{ url_for('ver_comentarios', moto_id=moto_id) }}">Volver</a>
         </form>
     </div>
 </body>
