@@ -22,6 +22,8 @@ def register():
                 foto = foto_file.filename
                 foto_path = os.path.join('app/static/uploads', foto)
                 foto_file.save(foto_path)
+        else:
+            foto = 'perfil.jpg'
                 
         # Hash de la contraseña utilizando un método específico
         clave_hash = generate_password_hash(clave, method='pbkdf2:sha256', salt_length=8)
