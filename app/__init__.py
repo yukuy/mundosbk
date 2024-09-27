@@ -2,6 +2,7 @@
 
 from flask import Flask
 from config import config
+from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -12,6 +13,9 @@ app.config.from_object(config)
 
 # Inicializar SQLAlche
 db.init_app(app)
+
+# Inicializa Flask-Mail
+mail = Mail(app)
     
 # Importar controladores y modelos
 from app import controlMotos

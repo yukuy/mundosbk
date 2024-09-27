@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentarios de Moto</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .informaciongeneral {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            border-radius: 8px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .moto-details, .infovendedor {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            flex: 1 1 48%;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .moto-details img {
+            border-radius: 8px;
+            margin-bottom: 15px;
+            width: 400px;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .embed-responsive {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Ajusta el ancho máximo del contenedor del video */
+            height: 0;
+            padding-bottom: 35%; /* Ajusta la altura en función del ancho (relación 2:1) */
+            margin: 0 auto; /* Centra el contenedor horizontalmente */
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #000; /* Fondo negro para los casos donde no haya video */
+        }
+
+        .embed-responsive iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .moto-details p, .infovendedor p {
+            margin: 10px 0;
+            color: #666;
+        }
+    
+        .comentarios {
+            margin-top: 20px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        .comentarios h4 {
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .comentarios p {
+            margin: 5px 0;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        form {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Estilo para el logo de WhatsApp */
+        .whatsapp-logo {
+            display: inline-block;
+            margin-top: -10px;
+        }
+
+        .whatsapp-logo img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            animation: jump 1.5s infinite;
+        }
+
+        @keyframes jump {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        } 
+    </style>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+    
+    <div class="informaciongeneral">
+        <!-- Información de la moto -->
+        <div class="moto-details">
+            <h1>Información de {{ moto.nombre }}</h1>
+            
+              <!-- Verificar si hay un video -->
+              {% if video_url %}
+              <div class="embed-responsive">
+                  <iframe src="{{ video_url }}" allow="autoplay; fullscreen"></iframe>
+              </div>
+            {% else %}
+                <!-- Si no hay video, mostrar la imagen de la moto -->
+                <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" alt="Foto de {{ moto.nombre }}" style="max-width: 100%; height: auto;">
+            {% endif %}
+          
+            <p>Precio: {{ moto.precio }}</p>
+            <p>Disponibles: {{ moto.cantidad }}</p>
+            <label for="descripcion">Descripción:</label>
+            <p>{{ moto.descripcion }}</p><br>
+        
+            <!-- Mostrar comentarios existentes -->
+            <div class="comentarios">
+                <h4>Comentarios</h4>
+                {% for comentario in comentarios %}
+                    <p>{{ comentario.usuarios.nombre }}: {{ comentario.comentario }}</p>
+                {% endfor %}
+            </div>
+        
+            <!-- Formulario para agregar un comentario -->
+            <form action="{{ url_for('add_comentario', moto_id=moto.id) }}" method="POST">
+                <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+        
+
+        <!-- Información del vendedor -->
+        <div class="infovendedor">
+            <h1>Vendedor</h1>
+            <p>Nombre: {{ vendedor.nombre }}</p>
+            <p>Correo: {{ vendedor.correo }}</p>  
+            <p>Teléfono: {{ vendedor.telefono }}</p>
+
+            <!-- Logo de WhatsApp como enlace -->
+            <div class="whatsapp-logo">
+                <a href="https://wa.me/57{{ vendedor.telefono }}?text=Hola,%20estoy%20interesado%20en%20la%20moto%20{{ moto.nombre }}" target="_blank">
+                    <img src="{{ url_for('static', filename='uploads/whatsapp-logo.png') }}" alt="WhatsApp Logo">
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

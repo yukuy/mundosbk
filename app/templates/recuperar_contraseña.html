@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
+    <title>Recuperar Contraseña</title>
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #247cb4    , #bdc3c7);
+            background: linear-gradient(135deg, #247cb4, #bdc3c7);
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -68,7 +69,7 @@
             font-weight: 600;
         }
 
-        input[type="email"], input[type="password"] {
+        input[type="email"] {
             padding: 0.75rem;
             margin-bottom: 1rem;
             border: 2px solid #ddd;
@@ -77,14 +78,14 @@
             transition: border-color 0.3s;
         }
 
-        input[type="email"]:focus, input[type="password"]:focus {
+        input[type="email"]:focus {
             border-color: #ff4e50;
             outline: none;
         }
 
         button {
             padding: 0.75rem;
-            background-color: #1f618d   ;
+            background-color: #1f618d;
             color: white;
             font-size: 1.2rem;
             font-weight: bold;
@@ -95,20 +96,7 @@
         }
 
         button:hover {
-            background-color: #195276 ;
-        }
-
-        a {
-            display: block;
-            margin-top: 1.5rem;
-            color: #1f618d  ;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        a:hover {
-            color: #154360;
+            background-color: #195276;
         }
 
         .flash-messages {
@@ -118,10 +106,8 @@
     </style>
 </head>
 <body>
-    <!--informacion que se requiere-->
     <div class="container">
-         <!-- Sección para mostrar los mensajes flash -->
-         <div class="flash-messages">
+        <div class="flash-messages">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     <ul>
@@ -133,30 +119,25 @@
             {% endwith %}
         </div>
         <script>
-            // Espera 1 segundo y luego aplica un efecto de desvanecimiento
             setTimeout(function() {
                 var flashMessages = document.querySelector('.flash-messages');
                 if (flashMessages) {
-                    flashMessages.style.opacity = '0';  // Desvanece el mensaje
+                    flashMessages.style.opacity = '0';
                     setTimeout(function() {
-                        flashMessages.style.display = 'none';  // Oculta el mensaje después del desvanecimiento
-                    }, 500);  // Espera 500ms más para completar el desvanecimiento
+                        flashMessages.style.display = 'none';
+                    }, 500);
                 }
-            }, 1000);  // 1000 milisegundos = 1 segundo
+            }, 1000);
         </script>
 
-        <h1>Iniciar Sesión</h1>
-        <form method="POST" action="{{ url_for('login') }}">
-            <label for="correo">Correo</label>
+        <h1>Recuperar Contraseña</h1>
+        <form method="POST" action="{{ url_for('recuperar') }}">
+            <label for="correo">Correo Electrónico</label>
             <input type="email" id="correo" name="correo" required>
 
-            <label for="clave">Contraseña</label>
-            <input type="password" id="clave" name="clave" required>
-
-            <button type="submit">Iniciar Sesión</button>
+            <button type="submit">Enviar</button>
         </form>
-        <a href="{{ url_for('register') }}">¿No tienes una cuenta? Regístrate aquí.</a>
-        <a href="{{ url_for('recuperar') }}">Recupera Contraseña.</a>
+        <a href="{{ url_for('login') }}">Regresar al inicio de sesión</a>
     </div>
 </body>
 </html>
