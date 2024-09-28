@@ -16,6 +16,9 @@ db.init_app(app)
 
 # Inicializa Flask-Mail
 mail = Mail(app)
+
+#configuracion de almacenamiento de cloudinary
+config.init_cloudinary()
     
 # Importar controladores y modelos
 from app import controlMotos

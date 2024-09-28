@@ -5,6 +5,7 @@ from app.models import Usuarios, db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import URLSafeTimedSerializer
+import cloudinary.uploader
 import os
 
 
@@ -87,7 +88,6 @@ Si no solicitaste este cambio, simplemente ignora este correo.
     except Exception as e:
         print(f'Error al enviar el correo: {e}')
 
-
 #ruta para registrar cada usuario
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -98,15 +98,19 @@ def register():
         telefono = request.form['telefono']
         foto = None
         
-        #agregar foto
+         # Agregar foto
         if 'foto' in request.files:
             foto_file = request.files['foto']
             if foto_file.filename != '':
-                foto = foto_file.filename
-                foto_path = os.path.join('app/static/uploads', foto)
-                foto_file.save(foto_path)
+                # Subir la imagen a Cloudinary
+                upload_result = cloudinary.uploader.upload(foto_file)
+                # Guardar la URL de la imagen subida
+                foto = upload_result['secure_url']
+            else:
+                # Si no se selecciona ninguna imagen, usa la imagen predeterminada
+                foto = 'static/uploads/perfil.jpg'
         else:
-            foto = 'perfil.jpg'
+            foto = 'static/uploads/perfil.jpg'
                 
         # Hash de la contraseña utilizando un método específico
         clave_hash = generate_password_hash(clave, method='pbkdf2:sha256', salt_length=8)
@@ -201,12 +205,10 @@ def editar_perfil(user_id):
         if 'foto' in request.files:
             foto_file = request.files['foto']
             if foto_file.filename != '':                
-                # Guardar la nueva foto
-                foto = foto_file.filename
-                uploads_dir = os.path.join(app.root_path, 'static/uploads')
-                foto_path = os.path.join(uploads_dir, foto)
-                os.makedirs(uploads_dir, exist_ok=True)
-                foto_file.save(foto_path)
+                # Subir la nueva imagen a Cloudinary
+                upload_result = cloudinary.uploader.upload(foto_file)
+                # Guardar la nueva URL de la imagen en la base de datos
+                foto = upload_result['secure_url']
                 usuario.foto = foto  # Actualizar el campo foto en la base de datos
 
         # Guardar cambios en la base de datos
@@ -217,6 +219,4 @@ def editar_perfil(user_id):
         return redirect(url_for('perfil_usuario', user_id=user_id))  # Ajusta según tu ruta del perfil
 
     return render_template('editar_perfil.html', usuario=usuario)
-
-
         

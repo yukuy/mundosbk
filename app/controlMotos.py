@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash, session
 from app import app
 from app.models import Motos, Usuarios, db
+import cloudinary.uploader
 import os
 
 
@@ -38,9 +39,10 @@ def add_moto():
         if 'foto' in request.files:
             foto_file = request.files['foto']
             if foto_file.filename != '':
-                foto = foto_file.filename
-                foto_path = os.path.join('app/static/uploads', foto)
-                foto_file.save(foto_path)
+                # Subir la imagen a Cloudinary
+                upload_result = cloudinary.uploader.upload(foto_file)
+                # Guardar la URL de la imagen subida
+                foto = upload_result['secure_url']
             
         # Crear la nueva moto
         nueva_moto = Motos(nombre=nombre, cantidad=int(cantidad), precio=int(precio), 
@@ -81,15 +83,14 @@ def edit_moto(id):
             flash('Todos los campos son requeridos.')
             return redirect(url_for('edit_moto', id=id))
         
+        # Manejar la carga de la foto
         if 'foto' in request.files:
             foto_file = request.files['foto']
             if foto_file.filename != '':                
-                # Guardar la nueva foto
-                foto = foto_file.filename
-                uploads_dir = os.path.join(app.root_path, 'static/uploads')
-                foto_path = os.path.join(uploads_dir, foto)
-                os.makedirs(uploads_dir, exist_ok=True)
-                foto_file.save(foto_path)
+                # Subir la nueva imagen a Cloudinary
+                upload_result = cloudinary.uploader.upload(foto_file)
+                # Guardar la nueva URL de la imagen en la base de datos
+                foto = upload_result['secure_url']
                 motos.foto = foto  # Actualizar el campo foto en la base de datos
 
         db.session.commit()

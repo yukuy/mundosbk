@@ -92,8 +92,13 @@
         <h2>{{ usuario.nombre }}</h2>
         
         <form method="post" enctype="multipart/form-data">
-            {% if usuario.foto %}
-            <img src="{{ url_for('static', filename='uploads/' ~ usuario.foto) }}" alt="foto de {{ usuario.nombre }}" width="100px"><br>
+            
+            {% if usuario.foto.startswith('http') %}
+                <!-- Mostrar la imagen subida a Cloudinary si es una URL -->
+                <img src="{{ usuario.foto }}" alt="foto de {{ usuario.nombre }}" width="100px"><br>
+            {% else %}
+                <!-- Mostrar la imagen predeterminada si no es una URL (local) -->
+                <img src="{{ url_for('static', filename='uploads/perfil.jpg') }}" alt="foto predeterminada" width="100px"><br>
             {% endif %}
             
             <p>Correo: {{ usuario.correo }}</p>

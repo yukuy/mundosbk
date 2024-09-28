@@ -120,8 +120,7 @@
             <p>Precio: {{ moto.precio }}</p>
             <p>Disponibles: {{ moto.cantidad }}</p>
             {% if moto.foto %}
-                <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
-                    alt="Foto de {{ moto.nombre }}">
+                <img src="{{ moto.foto }}" alt="Foto de {{ moto.nombre }}">
             {% else %}
                 <p>No disponible</p>
             {% endif %}
