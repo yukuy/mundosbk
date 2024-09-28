@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg,  #bdc3c7    , #247cb4 );
+            background: linear-gradient(135deg,  #bdc3c7 , #247cb4 );
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -19,14 +19,13 @@
             overflow: hidden;
         }
 
-
         .container {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 400px;
-            width: 100%;
+            width: 90%;
             text-align: center;
         }
 
@@ -84,15 +83,43 @@
         a:hover {
             text-decoration: underline;
         }
-        .flash-messages {
-            transition: opacity 0.5s ease; /* Transición suave */
-            opacity: 1;
+
+        /* Media query para pantallas pequeñas (móviles) */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+                padding: 0.6rem;
+                font-size: 1rem;
+            }
+
+            button {
+                padding: 0.6rem;
+                font-size: 1rem;
+            }
         }
+
+        /* Media query para pantallas medianas (tabletas) */
+        @media (min-width: 601px) and (max-width: 992px) {
+            .container {
+                padding: 1.5rem;
+                max-width: 600px;
+        }
+        }
+
     </style>
 </head>
 <body>
     <div class="background-container">
-         <!-- Sección para mostrar los mensajes flash -->
          <div class="flash-messages">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -109,12 +136,12 @@
             setTimeout(function() {
                 var flashMessages = document.querySelector('.flash-messages');
                 if (flashMessages) {
-                    flashMessages.style.opacity = '0';  // Desvanece el mensaje
+                    flashMessages.style.opacity = '0';
                     setTimeout(function() {
-                        flashMessages.style.display = 'none';  // Oculta el mensaje después del desvanecimiento
-                    }, 500);  // Espera 500ms más para completar el desvanecimiento
+                        flashMessages.style.display = 'none';
+                    }, 500);
                 }
-            }, 1000);  // 1000 milisegundos = 1 segundo
+            }, 1000);
         </script>
 
         <div class="container">

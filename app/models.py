@@ -9,7 +9,6 @@ class Usuarios(db.Model):
     clave = db.Column(db.String(200))
     telefono = db.Column(db.BigInteger)
     foto = db.Column(db.String(200), default='perfil.jpg')
-    numero_ventas = db.Column(db.Integer, default=0)  # Número de ventas realizadas
     calificacion_promedio = db.Column(db.Float, default=0.0)  # Calificación promedio
     fecha_registro = db.Column(db.DateTime, default=datetime.utcnow)  # Tiempo en la plataforma
 
