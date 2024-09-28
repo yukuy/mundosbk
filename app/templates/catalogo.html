@@ -86,7 +86,7 @@
             
         {% if moto.foto %}
             <a href="{{ url_for('ver_comentarios', moto_id=moto.id) }}">
-                <img src="{{ url_for('static', filename='uploads/' ~ moto.foto) }}" 
+                <img src="{{ moto.foto }}" alt="Foto de {{ moto.nombre }}" 
                     alt="Foto de {{ moto.nombre }}" 
                     class="moto-img">
             </a>
