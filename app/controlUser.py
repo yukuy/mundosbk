@@ -134,7 +134,8 @@ def login():
     
     #si el algun usuario ya ainicio secion redirigirlo al ala pagina prinsipal   
     if 'user_id' in session:
-        return redirect(url_for("base")) 
+        return redirect(url_for("base"))
+     
     if request.method == 'POST':
         correo = request.form['correo']
         clave = request.form['clave']

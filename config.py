@@ -1,12 +1,12 @@
 import secrets
 from datetime import timedelta
 import cloudinary
+import os
 
 class config:
-    SQLALCHEMY_DATABASE_URI = 'postgresql://railway_wb2i_user:KrxKouW9tjNy1M83JKQROy8CdwLU4q19@dpg-crnn4gu8ii6s73etpe70-a.oregon-postgres.render.com/railway_wb2i'
+    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://postgres.unobzvvcnumgglngjjpb:66aCkyJsQgCoEISG@aws-1-us-east-1.pooler.supabase.com:5432/postgres"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = secrets.token_hex(16)  # Genera una clave secreta aleatoria
-    SECRET_KEY = 'tu_clave_secreta_fija_aqui'
+    SECRET_KEY = os.getenv("SECRET_KEY")  # Genera una clave secreta aleatoria
     PERMANENT_SESSION_LIFETIME = timedelta(days=7)
 
     # Configuración del sistema para recuperar contraseña

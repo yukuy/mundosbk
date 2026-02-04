@@ -11,6 +11,11 @@ db = SQLAlchemy()
 app = Flask(__name__)
 app.config.from_object(config)
 
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_pre_ping": True,
+    "pool_recycle": 300,
+}
+
 # Inicializar SQLAlche
 db.init_app(app)
 
@@ -19,7 +24,8 @@ mail = Mail(app)
 
 #configuracion de almacenamiento de cloudinary
 config.init_cloudinary()
-    
+
+
 # Importar controladores y modelos
 from app import controlMotos
 from app import controlUser
